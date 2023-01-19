@@ -1,0 +1,121 @@
+.product-desc-wrapper {
+  padding-bottom: 20px;
+}
+.product-description {
+  padding: 20px;
+}
+.img-wrapper {
+  width: 100%;
+  height: 250px;
+}
+.product-description .img-wrapper img {
+  width: 100%;
+  height: 100%;
+  /* background-color: rgba(201, 199, 199, 0.3); */
+}
+.product-description .price-plus-minus {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30px;
+  font-weight: bold;
+  align-items: center;
+}
+.product-description .price-plus-minus span {
+  font-size: 1.3rem;
+  color: var(--green);
+}
+.product-description .price-plus-minus div {
+  width: 130px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgba(201, 199, 199, 0.3);
+  padding: 10px 15px;
+  border-radius: 7px;
+  color: var(--green);
+}
+.product-desc h2 {
+  margin-top: 10px;
+}
+.product-description .add:hover {
+  color: #f1f1f1;
+  background-color: var(--green);
+}
+.product-description .add {
+  width: 80%;
+  margin: auto;
+  border: 1px solid var(--green);
+  padding: 10px;
+  color: var(--green);
+  font-size: 1.1rem;
+}
+.product-description .remove:hover {
+  color: #f1f1f1;
+  background-color: red;
+}
+.product-description .remove {
+  width: 80%;
+  margin: auto;
+  border: 1px solid red;
+  padding: 10px;
+  color: red;
+  font-size: 1.1rem;
+}
+
+.return-home {
+  text-align: center;
+  display: block;
+  font-size: 1.1rem;
+  color: gray;
+  font-weight: bold;
+  cursor: pointer;
+}
+.return-home a {
+  text-decoration: none;
+  color: gray;
+  margin-left: 5px;
+}
+
+@media (min-width: 450px) {
+  .img-wrapper {
+    width: 100%;
+    height: 300px;
+  }
+}
+/*  Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) {
+}
+
+/*  Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+  .product-description {
+    display: flex;
+    margin-top: 60px;
+  }
+  .product-description > div:first-child {
+    margin-right: 25px;
+  }
+  .product-description > div {
+    flex: 1;
+  }
+  .product-description .img-wrapper {
+    height: 100%;
+  }
+}
+
+/*  Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+  .product-description {
+    width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/*  X-Large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+}
+
+/*  XX-Large devices (larger desktops, 1400px and up) */
+@media (min-width: 1400px) {
+}

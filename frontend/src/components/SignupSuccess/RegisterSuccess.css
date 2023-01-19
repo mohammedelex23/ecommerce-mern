@@ -1,0 +1,39 @@
+.register-success {
+  margin-top: 50px;
+  padding: 20px 10px;
+  box-shadow: 4px 1px 10px -2px grey;
+  text-align: center;
+}
+.register-success .check-icon {
+  color: green;
+  padding: 10px;
+  border: 1px solid green;
+  border-radius: 50%;
+  margin-bottom: 10px;
+}
+.register-success p.second {
+  color: rgb(243, 53, 53);
+}
+.register-success button:hover {
+  background-color: rgb(85, 85, 233);
+}
+.register-success button {
+  background-color: rgb(55, 55, 241);
+  color: #f1f1f1;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+.register-success .login-link {
+  display: block;
+  margin-top: 15px;
+}
+
+/*  Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+  .register-success {
+    width: 620px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}

@@ -1,0 +1,81 @@
+.register-wrapper {
+  border: 1px solid lightgray;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 25px;
+  margin-top: 30px;
+}
+.register-wrapper p {
+  margin: 0;
+  padding: 0;
+  line-height: 10px;
+  font-weight: bold;
+  color: green;
+}
+.register-wrapper .title-container {
+  background-color: green;
+  padding-left: 10px;
+  margin-left: -20px;
+  margin-bottom: 30px;
+}
+.register-wrapper .title-container .title {
+  background-color: #ffffff;
+  padding-top: 20px;
+  padding-left: 20px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.register-wrapper .input-wrapper {
+  margin-bottom: 15px;
+}
+.register-wrapper .input-group {
+  display: flex;
+  align-items: center;
+}
+.register-wrapper .input-group span {
+  border: 1px solid gray;
+  padding: 7px;
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+}
+.register-wrapper .input-group input {
+  padding: 7px 10px;
+  width: 100%;
+  border: none;
+  border: 1px solid gray;
+  border-left: none;
+}
+.register-wrapper .register-btn button {
+  width: 100%;
+  background-color: green;
+  color: #f1f1ff;
+  border: none;
+  padding: 7px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  margin-bottom: 15px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-transform: capitalize;
+}
+.register-wrapper .links {
+  display: flex;
+  justify-content: space-between;
+}
+.register-wrapper .links a {
+  text-decoration: none;
+  color: green;
+}
+.register-wrapper .links a:hover {
+  color: gray;
+}
+
+/*  Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+  .register-wrapper {
+    width: 420px;
+    margin-top: 60px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}

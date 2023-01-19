@@ -1,0 +1,7 @@
+.success-wrapper {
+  margin-top: 50px;
+  text-align: center;
+}
+.success-wrapper h2 {
+  color: green;
+}

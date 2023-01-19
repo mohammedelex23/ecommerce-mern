@@ -1,0 +1,30 @@
+.cart-item-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /* padding: 5px 20px; */
+  color: gray;
+  user-select: none;
+}
+.cart-item-wrapper > div {
+  display: flex;
+}
+.cart-item-wrapper img {
+  width: 50px;
+  margin-right: 10px;
+}
+.cart-item-wrapper .total {
+  color: black;
+  font-weight: bold;
+}
+.cart-item-wrapper .quantity {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+.cart-item-wrapper .delete-icon:hover {
+  color: rgb(238, 52, 52);
+}
+.cart-item-wrapper .delete-icon {
+  font-size: 1.2rem;
+  cursor: pointer;
+}

@@ -1,0 +1,69 @@
+.header {
+  width: 100%;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+.header .logo {
+  font-size: 1.2rem;
+  user-select: none;
+  cursor: pointer;
+}
+.header .logo a {
+  text-decoration: none;
+  color: #000000;
+}
+.header div .icon {
+  color: #646060;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+.header div > span {
+  margin-right: 15px;
+}
+.header .cart-counter {
+  position: relative;
+  top: -12px;
+  right: 7px;
+  background-color: rgb(10, 128, 39);
+  color: #fff;
+  width: 20px;
+  height: 20px;
+  padding: 3px;
+  border-radius: 50%;
+
+  font-size: 12px;
+  /* vertical-align: middle; */
+  /* line-height: 16px; */
+  /* text-align: center; */
+}
+.header .login-link {
+  text-decoration: none;
+  background-color: green;
+  color: #f1f1f1;
+  padding: 3px 5px;
+  border-radius: 3px;
+}
+.header .wrapper {
+  position: relative;
+}
+.header .wrapper .logout {
+  position: absolute;
+  background-color: white;
+  box-shadow: 4px 3px 20px -2px grey;
+  right: 0;
+  top: calc(100% + 5px);
+  padding: 10px;
+  display: none;
+}
+.header .wrapper .logout span {
+  color: rgb(61, 61, 245);
+  font-weight: bold;
+  text-decoration: underline;
+  user-select: none;
+  cursor: pointer;
+}
