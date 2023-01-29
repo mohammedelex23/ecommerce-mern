@@ -12,10 +12,10 @@ const erorMiddleware = function (error, req, res, next) {
   }
   console.log("server error", error);
 
-  res.status(error.code || 500).json(
-    error.message || "something went wrong"
+  res.status(error.code || 500).json({
+    message: error.message || "something went wrong",
     // stack: process.env.NODE_ENV === "production" ? undefined : error.stack,
-  );
+  });
 };
 
 module.exports = erorMiddleware;

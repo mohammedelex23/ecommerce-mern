@@ -16,7 +16,6 @@ async function getOneProduct(req, res, next) {
   try {
     let product = await Product.findById(req.params.id);
     if (!product) {
-      removeImage(image);
       return next(
         new NotFound(`product with id ${req.params.id} is not found`)
       );
@@ -30,12 +29,9 @@ async function getOneProduct(req, res, next) {
 async function createProduct(req, res, next) {
   try {
     const { name, price, description, image } = req.body;
-    // check for uniqueness
+    // remove duplicate if found
     let product = await Product.findOne({ name });
     if (product) {
-      // fs.rm(`uploads/${req.file.filename}`, function (err) {
-      //   console.log(err);
-      // });
       removeImage(req.file.path);
       return next(
         new BadRequest(`product with name: ${name} is already exists`)
@@ -71,19 +67,19 @@ async function updateProduct(req, res, next) {
     let oldImage = oldProduct.image;
     oldProduct.image = image || oldProduct.image;
 
-    oldProduct = await oldProduct.save();
+    let newProduct = await oldProduct.save();
     if (image) {
       // remove old image
       removeImage(oldImage);
     }
-    res.status(200).json(oldProduct);
+    res.status(200).json(newProduct);
   } catch (error) {
     removeImage(req.body.image);
     next(error);
   }
 }
 
-const getProductImage = async function (req, res, next) {
+async function getProductImage(req, res, next) {
   try {
     let product = await Product.findById(req.params.id);
 
@@ -99,13 +95,31 @@ const getProductImage = async function (req, res, next) {
   } catch (error) {
     next(error);
   }
-};
+}
+
+async function deleteProduct(req, res, next) {
+  try {
+    let product = await Product.findById(req.params.id);
+
+    if (!product) {
+      return next(
+        new NotFound(`product with id ${req.params.id} is not found`)
+      );
+    }
+    await Product.deleteOne({ _id: req.params.id });
+    removeImage(product.image);
+    res.status(200).send("Deleted successfully");
+  } catch (error) {
+    next(error);
+  }
+}
 
 module.exports = {
   getAllProducts,
   getOneProduct,
   createProduct,
   updateProduct,
+  deleteProduct,
   getProductImage,
 };
 

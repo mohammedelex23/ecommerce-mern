@@ -32,16 +32,22 @@ const fetchProductsPrices = async function (req, res, next) {
       async (id) => await Product.findById(id).select("_id price")
     );
     let products = await Promise.all(promises);
+
     let prices = {};
     products.forEach((item) => {
-      prices[item._id] = item.price;
+      if (item) prices[item._id] = item.price;
     });
 
     req.cart = req.cart.map((item) => {
-      item.price = prices[item._id];
-
-      return item;
+      if (prices[item._id]) {
+        item.price = prices[item._id];
+        return item;
+      } else {
+        return null;
+      }
     });
+    req.cart = req.cart.filter((item) => Boolean(item));
+
     next();
   } catch (error) {
     next(error);

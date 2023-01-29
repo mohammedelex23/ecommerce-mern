@@ -6,7 +6,7 @@ const {
 } = require("../middlewares/productValidationMiddlewares");
 
 const multer = require("multer");
-const mimetypes = ["image/jpeg", "image/png"];
+const mimetypes = ["image/jpeg", "image/png", "image/jpg"];
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -44,5 +44,6 @@ router.put(
   validateUpdate,
   productCtrl.updateProduct
 );
+router.delete("/:id", productCtrl.deleteProduct);
 router.get("/:id/image", productCtrl.getProductImage);
 module.exports = router;

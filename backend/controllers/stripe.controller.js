@@ -4,9 +4,9 @@ const stripe = require("stripe")(
 const YOUR_DOMAIN = "http://localhost:3000";
 
 const urls = {
-  "63c59e173a839424227be701": "https://i.ibb.co/KDS59Sr/jacket-1.png",
-  "63c59e173a839424227be702": "https://i.ibb.co/CJX6ktH/jacket-3.png",
-  "63b9ac2790451647fee916b4": "https://i.ibb.co/CJX6ktH/jacket-3.png",
+  "63cc5e93fd44c0712a6b6fd1": "https://i.ibb.co/KDS59Sr/jacket-1.png",
+  "63cc5dc9fd44c0712a6b6fc6": "https://i.ibb.co/CJX6ktH/jacket-3.png",
+  "63cc5e1cfd44c0712a6b6fcb": "https://i.ibb.co/CMB0zrs/jacket-4.png",
 };
 
 async function createCheckoutSession(req, res) {
@@ -24,12 +24,11 @@ async function createCheckoutSession(req, res) {
       },
     };
   });
-
   const session = await stripe.checkout.sessions.create({
     line_items,
     mode: "payment",
-    success_url: `${YOUR_DOMAIN}/success`,
-    cancel_url: `${YOUR_DOMAIN}/`, //redirect user to main page
+    success_url: `${process.env.BASE_URL}/success`,
+    cancel_url: `${process.env.BASE_URL}/`, //redirect user to main page
   });
 
   res.status(200).json(session.url);
