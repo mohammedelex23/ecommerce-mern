@@ -1,0 +1,28 @@
+.delete-product p {
+  color: tomato;
+}
+.delete-product .product-form div button {
+  cursor: pointer;
+  padding: 3px 5px;
+}
+.delete-product .product-form div button:hover {
+  background-color: indianred;
+}
+.delete-product .product-form div button {
+  background-color: tomato;
+  border: none;
+  color: #f1f1f1;
+}
+.delete-product .product-form div button:first-child:hover {
+  background-color: lightgray;
+}
+.delete-product .product-form div button:first-child {
+  margin-right: 15px;
+  background-color: transparent;
+  border: 1px solid gray;
+  color: gray;
+}
+.delete-product .product-form div {
+  display: flex;
+  justify-content: flex-end;
+}

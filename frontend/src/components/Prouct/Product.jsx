@@ -21,7 +21,7 @@ export default function Product({ product }) {
       if (!isAuthenticated) {
         return navigate("/login", { state: pathname });
       }
-      dispatch(addToCart(product._id));
+      dispatch(addToCart(product));
     } else {
       dispatch(removeFromCart(product._id));
     }

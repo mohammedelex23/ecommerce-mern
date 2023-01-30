@@ -2,11 +2,12 @@ import "./Register.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope, faUser } from "@fortawesome/free-regular-svg-icons";
 import { faUnlockKeyhole } from "@fortawesome/free-solid-svg-icons";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, Navigate } from "react-router-dom";
 import ErrorComp from "../ErrorComp/ErrorComp";
-import useForm from "../../hooks/useForm";
+import useRegisterForm from "../../hooks/useRegisterForm";
 import { useState } from "react";
 import authApi from "../../api/authApi";
+import auth from "../../auth/auth";
 export default function Register() {
   const {
     values,
@@ -17,14 +18,14 @@ export default function Register() {
     handleBlur,
     handleChange,
     isFormValid,
-  } = useForm();
+  } = useRegisterForm();
   const [authError, setAuthError] = useState("");
   const navigate = useNavigate();
 
   const handleClick = async function () {
-    let result = isFormValid();
+    let isValid = isFormValid();
     if (
-      result ||
+      !isValid ||
       nameError ||
       confirmPasswordError ||
       emailError ||
@@ -50,11 +51,14 @@ export default function Register() {
       if (error?.type) {
         console.log(error);
       } else {
-        setAuthError(error || "something went wrong");
+        setAuthError(error.message || "something went wrong");
       }
     }
   };
 
+  if (auth.isLoggedIn()) {
+    return <Navigate to="/" />;
+  }
   return (
     <div className="register-wrapper">
       <div className="register-content">
@@ -121,7 +125,6 @@ export default function Register() {
             </span>
             <input
               onChange={handleChange("confirmPassword")}
-              onBlur={handleBlur("confirmPassword")}
               name="confirmPassword"
               type="password"
               placeholder="Confirm password"

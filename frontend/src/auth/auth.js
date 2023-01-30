@@ -1,3 +1,4 @@
+import jwt_decode from "jwt-decode";
 const getLocalUser = function () {
   let user = localStorage.getItem("user");
   if (!user) return null;
@@ -25,6 +26,25 @@ const logout = function () {
   localStorage.removeItem("cart");
 };
 
+const isLoggedIn = function () {
+  try {
+    let token = getToken();
+    if (!token) {
+      return false;
+    }
+    let decoded = jwt_decode(token);
+    let token_exp = decoded.exp * 1000;
+    if (token_exp - 1000 * 60 * 60 >= Date.now()) {
+      return true;
+    }
+    logout();
+    return false;
+  } catch (error) {
+    logout();
+    return false;
+  }
+};
+
 export default {
   isAuthenticated,
   getLocalUser,
@@ -32,4 +52,5 @@ export default {
   getToken,
   logout,
   isUserVerified,
+  isLoggedIn,
 };

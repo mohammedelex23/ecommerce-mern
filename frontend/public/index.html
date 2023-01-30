@@ -24,6 +24,17 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
+    <style>
+      footer {
+        display: block;
+        background-color: green;
+        text-align: center;
+        padding: 10px;
+        color: #ffffff;
+        margin-top: 50px;
+        /* margin: 40px -52px 0px; */
+      }
+    </style>
     <title>React App</title>
   </head>
   <body>
@@ -39,5 +50,9 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+    <footer>copy right &copy; <span id="this-year"></span></footer>
+    <script>
+      document.getElementById("this-year").innerText = new Date().getFullYear();
+    </script>
   </body>
 </html>

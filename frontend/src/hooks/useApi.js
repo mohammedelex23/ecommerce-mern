@@ -5,9 +5,40 @@ export default function useApi(url) {
   const [values, setValues] = useState({
     isLoading: false,
     isError: false,
-    errors: null,
+    error: null,
     data: [],
   });
+
+  const AddProducts = function (product) {
+    let newProducts = [...values.data];
+    newProducts.push(product);
+    setValues({
+      ...values,
+      data: newProducts,
+    });
+  };
+  const deleteProduct = function (productId) {
+    let newProducts = [...values.data];
+    newProducts = newProducts.filter((item) => item._id !== productId);
+    setValues({
+      ...values,
+      data: newProducts,
+    });
+  };
+  const editProduct = function (product) {
+    let newProducts = [...values.data];
+    newProducts = newProducts.map((item) => {
+      if (item._id === product._id) {
+        return product;
+      } else {
+        return item;
+      }
+    });
+    setValues({
+      ...values,
+      data: newProducts,
+    });
+  };
 
   const callApi = async function () {
     setValues({
@@ -18,7 +49,6 @@ export default function useApi(url) {
     });
     try {
       let res = await axios.get(url);
-      console.log(res.data);
 
       setValues({
         ...values,
@@ -27,18 +57,20 @@ export default function useApi(url) {
         data: res.data,
       });
     } catch (error) {
+      console.log(error);
+
       setValues({
         ...values,
         isLoading: false,
         isError: true,
-        errors: error,
+        error: error?.response?.data || error.message,
         data: [],
       });
     }
   };
   useEffect(() => {
-    callApi()
+    callApi();
   }, [url]);
 
-  return { values, callApi };
+  return { ...values, AddProducts, deleteProduct, editProduct };
 }

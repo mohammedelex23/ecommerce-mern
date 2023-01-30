@@ -1,0 +1,22 @@
+#veiw-product .product-img {
+  width: 60%;
+  display: block;
+  margin: auto;
+  margin-bottom: 10px;
+}
+#veiw-product .product-info {
+  margin-bottom: 10px;
+}
+#veiw-product .product-info span:first-child {
+  font-weight: bold;
+  margin-right: 5px;
+}
+.exit-icon-container .exit-icon {
+  padding-top: 10px;
+  padding-right: 15px;
+}
+.exit-icon-container {
+  /* background-color: tomato; */
+  margin: -20px;
+  text-align: end;
+}

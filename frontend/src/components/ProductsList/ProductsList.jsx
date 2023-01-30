@@ -1,26 +1,34 @@
 import React from "react";
 import "./ProductsList.css";
 import Product from "../Prouct/Product";
-import { useEffect, useState } from "react";
 import productApi from "../../api/productApi";
 import useApi from "../../hooks/useApi";
 import configs from "../../configs";
-import { useDispatch, useSelector } from "react-redux";
-import { fillCartItems, selectCart } from "../../redux/slices/cartSlice";
+import ErrorComp from "../ErrorComp/ErrorComp";
 export default function Products() {
-  let { cartItems: products } = useSelector(selectCart);
+  const { data: products, isError, isLoading, error } = useApi(
+    `${configs.BASE_URL}/api/products`
+  );
 
   return (
-    <div className="products">
-      <h3 className="title">Products</h3>
-      <ul className="products-wrapper">
-        {products.length > 0 &&
-          products.map((product) => (
-            <React.Fragment key={product._id}>
-              <Product product={product} />
-            </React.Fragment>
-          ))}
-      </ul>
-    </div>
+    <>
+      {isError && (
+        <ErrorComp error={error?.message || "something went wrong"} />
+      )}
+      {isLoading && <div>Loading...</div>}
+      {products?.length > 0 && (
+        <div className="products">
+          <h3 className="title">Products</h3>
+          <ul className="products-wrapper">
+            {products.length > 0 &&
+              products.map((product) => (
+                <React.Fragment key={product._id}>
+                  <Product product={product} />
+                </React.Fragment>
+              ))}
+          </ul>
+        </div>
+      )}
+    </>
   );
 }

@@ -15,17 +15,22 @@ import {
   removeFromCart,
   increaseQty,
   decreaseQty,
-  slelectProduct,
+  selectItemInCart,
+  selectItemQty,
 } from "../../redux/slices/cartSlice";
 import auth from "../../auth/auth";
 
 export default function ProductDescription() {
   const { state, pathname } = useLocation();
 
+  const { data: product, isError, isLoading, error } = useApi(
+    `${configs.BASE_URL}/api/products/${state?.productId}`
+  );
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const product = useSelector(slelectProduct(state?.productId));
+  const inCart = useSelector(selectItemInCart(product._id));
+  const qty = useSelector(selectItemQty(product._id));
 
   const handleClick = (type) => () => {
     if (type === "add") {
@@ -33,7 +38,7 @@ export default function ProductDescription() {
       if (!isAuthenticated) {
         return navigate("/login", { state: { pathname, state } });
       }
-      dispatch(addToCart(product._id));
+      dispatch(addToCart(product));
     } else {
       dispatch(removeFromCart(product._id));
     }
@@ -41,7 +46,7 @@ export default function ProductDescription() {
 
   const handleQty = (type) => () => {
     if (type === "increase") {
-      dispatch(increaseQty(product._id));
+      dispatch(increaseQty(product));
     } else {
       dispatch(decreaseQty(product._id));
     }
@@ -49,6 +54,10 @@ export default function ProductDescription() {
 
   if (!state) {
     return <Navigate to="/" replace={true} />;
+  }
+
+  if (error) {
+    return <Navigate to="/" replace />;
   }
 
   return (
@@ -75,7 +84,7 @@ export default function ProductDescription() {
                     onClick={handleQty()}
                     icon={faMinus}
                   />
-                  <span>{product.qty}</span>
+                  <span>{qty || 1}</span>
                   <FontAwesomeIcon
                     style={{ cursor: "pointer" }}
                     onClick={handleQty("increase")}
@@ -83,7 +92,7 @@ export default function ProductDescription() {
                   />
                 </div>
               </div>
-              {!product.inCart ? (
+              {!inCart ? (
                 <button onClick={handleClick("add")} className="btn add">
                   Add to Cart
                 </button>

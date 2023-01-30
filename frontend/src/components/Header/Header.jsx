@@ -2,27 +2,12 @@ import "./Header.css";
 import { faUser } from "@fortawesome/free-regular-svg-icons";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useSelector, useDispatch } from "react-redux";
-import { selectCart, fillCartItems } from "../../redux/slices/cartSlice";
-import { useEffect } from "react";
-import productApi from "../../api/productApi";
-import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { selectCart } from "../../redux/slices/cartSlice";
+import { Link, useLocation } from "react-router-dom";
 import auth from "../../auth/auth";
 export default function Header() {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    let cart = localStorage.getItem("cart");
-    if (cart) {
-      cart = JSON.parse(cart);
-
-      dispatch(fillCartItems(cart));
-    } else {
-      productApi.getProducts().then((products) => {
-        dispatch(fillCartItems(products));
-      });
-    }
-  }, []);
+  const { pathname } = useLocation();
 
   const { itemsCount } = useSelector(selectCart);
   const logout = function () {
@@ -31,24 +16,40 @@ export default function Header() {
   };
   return (
     <div className="header">
-      <h1 className="logo">
-        <Link to="/">Ecommerce</Link>
-      </h1>
+      {pathname === "/dashboard" ? (
+        <h1 className="logo">
+          <Link to="/">Dashboard</Link>
+        </h1>
+      ) : (
+        <h1 className="logo">
+          <Link to="/">Ecommerce</Link>
+        </h1>
+      )}
+
       <div className="wrapper">
-        <span
-          onClick={openCart}
-          style={{ position: "relative", cursor: "pointer" }}
-        >
-          <FontAwesomeIcon className="icon" icon={faShoppingCart} />
-          <span className="cart-counter">{itemsCount}</span>
-        </span>
+        {pathname !== "/dashboard" && (
+          <span
+            onClick={openCart}
+            style={{ position: "relative", cursor: "pointer" }}
+          >
+            <FontAwesomeIcon className="icon" icon={faShoppingCart} />
+            <span className="cart-counter">{itemsCount}</span>
+          </span>
+        )}
 
         {auth.isAuthenticated() ? (
-          <FontAwesomeIcon
-            onClick={toggleLogout}
-            className="icon"
-            icon={faUser}
-          />
+          <>
+            {pathname === "/dashboard" && (
+              <span style={{ marginRight: "7px", userSelect: "none" }}>
+                Admin
+              </span>
+            )}
+            <FontAwesomeIcon
+              onClick={toggleLogout}
+              className="icon"
+              icon={faUser}
+            />
+          </>
         ) : (
           <Link className="login-link" to="/login">
             Login

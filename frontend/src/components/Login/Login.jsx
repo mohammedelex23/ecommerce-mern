@@ -2,9 +2,9 @@ import "./Login.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope } from "@fortawesome/free-regular-svg-icons";
 import { faUnlockKeyhole } from "@fortawesome/free-solid-svg-icons";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate, Navigate } from "react-router-dom";
 import ErrorComp from "../ErrorComp/ErrorComp";
-import useForm from "../../hooks/useForm";
+import useLoginForm from "../../hooks/useLoginForm";
 import authApi from "../../api/authApi";
 import { useState } from "react";
 import auth from "../../auth/auth";
@@ -17,14 +17,14 @@ export default function Login() {
     handleBlur,
     handleChange,
     isFormValid,
-  } = useForm();
+  } = useLoginForm();
   const [authError, setAuthError] = useState("");
   const { state } = useLocation();
   const navigate = useNavigate();
 
   const handleClick = async function () {
-    let result = isFormValid();
-    if (result || emailError || passwordError) return;
+    let isValid = isFormValid();
+    if (!isValid || emailError || passwordError) return;
     let { email, password } = values;
     email = email.trim();
     password = password.trim();
@@ -38,10 +38,14 @@ export default function Login() {
         // redirect to account verify route
         navigate("/registeration_success", { state: "Account Verification" });
       } else {
-        setAuthError(error || "something went wrong");
+        setAuthError(error.message || "something went wrong");
       }
     }
   };
+
+  if (auth.isLoggedIn()) {
+    return <Navigate to="/" />;
+  }
 
   return (
     <div className="login-wrapper">

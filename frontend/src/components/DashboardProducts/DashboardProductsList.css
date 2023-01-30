@@ -1,0 +1,21 @@
+.dashboard-products-table-wrapper {
+  width: calc(100% + 10px);
+  height: calc(100vh - 200px);
+  overflow: auto;
+  margin-top: 10px;
+  background-color: #ffffff;
+}
+.dashboard-products-table {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  text-align: start;
+  user-select: none;
+}
+.dashboard-products-table th {
+  text-align: start;
+  padding: 15px;
+}
+.dashboard-products-table tr {
+  box-shadow: 0px 0px 1px 0px grey;
+}

@@ -28,15 +28,18 @@ async function getOneProduct(req, res, next) {
 
 async function createProduct(req, res, next) {
   try {
-    const { name, price, description, image } = req.body;
+    let { name, price, description, image: file } = req.body;
+
     // remove duplicate if found
     let product = await Product.findOne({ name });
     if (product) {
-      removeImage(req.file.path);
       return next(
         new BadRequest(`product with name: ${name} is already exists`)
       );
     }
+    let image = {};
+    image.data = fs.readFileSync(file.filepath);
+    image.contentType = file.mimetype;
     product = new Product({
       name,
       price,
@@ -44,6 +47,7 @@ async function createProduct(req, res, next) {
       image,
     });
     product = await product.save();
+    product.image = undefined;
     res.status(200).json(product);
   } catch (error) {
     next(error);
@@ -55,7 +59,6 @@ async function updateProduct(req, res, next) {
     const { name, description, price, image } = req.body;
     let oldProduct = await Product.findById(req.params.id);
     if (!oldProduct) {
-      removeImage(image);
       return next(
         new NotFound(`product with id ${req.params.id} is not found`)
       );
@@ -70,11 +73,9 @@ async function updateProduct(req, res, next) {
     let newProduct = await oldProduct.save();
     if (image) {
       // remove old image
-      removeImage(oldImage);
     }
     res.status(200).json(newProduct);
   } catch (error) {
-    removeImage(req.body.image);
     next(error);
   }
 }
@@ -88,10 +89,12 @@ async function getProductImage(req, res, next) {
         new NotFound(`product with id ${req.params.id} is not found`)
       );
     }
+    res.set("Content-Type", product.image.contentType);
+    res.send(product.image.data);
 
-    res.sendFile(path.join(__dirname, "../", product.image), function (err) {
-      // console.log(__dirname);
-    });
+    // res.sendFile(path.join(__dirname, "../", product.image), function (err) {
+    //   // console.log(__dirname);
+    // });
   } catch (error) {
     next(error);
   }
@@ -107,7 +110,6 @@ async function deleteProduct(req, res, next) {
       );
     }
     await Product.deleteOne({ _id: req.params.id });
-    removeImage(product.image);
     res.status(200).send("Deleted successfully");
   } catch (error) {
     next(error);
@@ -122,9 +124,3 @@ module.exports = {
   deleteProduct,
   getProductImage,
 };
-
-function removeImage(path) {
-  fs.rm(path, function (err) {
-    if (err) console.log(err);
-  });
-}
