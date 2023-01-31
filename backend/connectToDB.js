@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 mongoose.set("strictQuery", true);
-module.exports = async function connectToDB(url) {
+module.exports = async function connectToDB(url, cb) {
   if (process.env.NODE_ENV === "development") {
     url = "mongodb://localhost:27017/ecommerce";
   }
@@ -11,6 +11,7 @@ module.exports = async function connectToDB(url) {
       process.exit();
     } else {
       console.log("Connected to mongoDB", mongoose.connection.host);
+      cb();
     }
   });
 };

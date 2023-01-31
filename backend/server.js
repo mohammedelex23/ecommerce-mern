@@ -8,7 +8,11 @@ const notFoundMiddleware = require("./middlewares/notFoundMiddleware");
 const path = require("path");
 const cors = require("cors");
 // mongoDB connection
-connectToDB(process.env.MONGO_URL);
+connectToDB(process.env.MONGO_URL, function () {
+  app.listen(process.env.PORT, function () {
+    console.log("Server is running");
+  });
+});
 
 // thir party middlewares
 app.use(morgan("dev"));
@@ -48,7 +52,3 @@ if (process.env.NODE_ENV === "development") {
 app.use(notFoundMiddleware);
 // error middlware
 app.use(errorMiddleware);
-
-app.listen(process.env.PORT, function () {
-  console.log("Server is running");
-});
