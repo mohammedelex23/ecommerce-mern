@@ -17,6 +17,7 @@ app.use(express.static(path.join(__dirname, "./upload")));
 app.use(
   cors({
     origin: ["http://localhost:3000", "https://checkout.stripe.com"],
+    methods: ["GET", "POST"],
   })
 );
 

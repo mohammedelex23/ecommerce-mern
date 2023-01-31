@@ -3,14 +3,11 @@ const stripe = require("stripe")(
 );
 const YOUR_DOMAIN = "http://localhost:3000";
 
-const urls = {
-  "63cc5e93fd44c0712a6b6fd1": "https://i.ibb.co/KDS59Sr/jacket-1.png",
-  "63cc5dc9fd44c0712a6b6fc6": "https://i.ibb.co/CJX6ktH/jacket-3.png",
-  "63cc5e1cfd44c0712a6b6fcb": "https://i.ibb.co/CMB0zrs/jacket-4.png",
-};
-
 async function createCheckoutSession(req, res) {
   let line_items = req.cart.map((item) => {
+    let imageUrl = `${process.env.BASE_URL}/api/products/${item._id}/image`;
+    console.log("asdasd", imageUrl);
+
     return {
       quantity: item.qty,
       price_data: {
@@ -19,7 +16,7 @@ async function createCheckoutSession(req, res) {
         product_data: {
           name: item.name,
           description: item.description,
-          images: [urls[item._id]],
+          images: [imageUrl],
         },
       },
     };

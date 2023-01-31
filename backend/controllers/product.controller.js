@@ -5,7 +5,7 @@ const path = require("path");
 
 async function getAllProducts(req, res, next) {
   try {
-    let producs = await Product.find({});
+    let producs = await Product.find({}).select("-image");
     res.status(200).json(producs);
   } catch (error) {
     next(error);
@@ -14,7 +14,7 @@ async function getAllProducts(req, res, next) {
 
 async function getOneProduct(req, res, next) {
   try {
-    let product = await Product.findById(req.params.id);
+    let product = await Product.findById(req.params.id).select("-image");
     if (!product) {
       return next(
         new NotFound(`product with id ${req.params.id} is not found`)
@@ -74,6 +74,7 @@ async function updateProduct(req, res, next) {
     if (image) {
       // remove old image
     }
+    newProduct.image = undefined;
     res.status(200).json(newProduct);
   } catch (error) {
     next(error);
