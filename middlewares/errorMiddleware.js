@@ -1,4 +1,6 @@
 const erorMiddleware = function (error, req, res, next) {
+  console.log(error);
+
   if (
     error.name === "TokenExpiredError" ||
     error.name === "JsonWebTokenError" ||
@@ -10,7 +12,6 @@ const erorMiddleware = function (error, req, res, next) {
       stack: process.env.NODE_ENV === "production" ? undefined : error.stack,
     });
   }
-  console.log("server error", error);
 
   res.status(error.code || 500).json({
     message: error.message || "something went wrong",

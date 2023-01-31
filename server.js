@@ -44,8 +44,11 @@ const indexRouter = express.Router().get("/", function (req, res) {
 if (process.env.NODE_ENV === "development") {
   app.use("/", indexRouter);
 } else {
+  console.log("exec");
+
   app.use(express.static(path.join(__dirname, "./frontend/build")));
   app.get("*", function (req, res) {
+    console.log("exec passed");
     res.sendFile(path.resolve(__dirname, "./frontend/build/index.html"));
   });
 }
