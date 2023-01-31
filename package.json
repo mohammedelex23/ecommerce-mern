@@ -2,10 +2,10 @@
   "name": "ecommerce",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "./backend/server.js",
   "scripts": {
-    "start": "node ./server",
-    "dev": "nodemon ./server"
+    "start": "node ./backend/server",
+    "dev": "nodemon ./backend/server"
   },
   "keywords": [
     "nodejs",
