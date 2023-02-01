@@ -57,7 +57,7 @@ export default function useApi(url) {
         data: res.data,
       });
     } catch (error) {
-      console.log(error);
+      console.log(url, error);
 
       setValues({
         ...values,
