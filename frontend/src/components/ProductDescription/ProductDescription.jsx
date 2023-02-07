@@ -29,10 +29,13 @@ export default function ProductDescription() {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const inCart = useSelector(selectItemInCart(product._id));
-  const qty = useSelector(selectItemQty(product._id));
+  const inCart = useSelector(selectItemInCart(product?._id));
+  console.log(inCart, product);
+
+  const qty = useSelector(selectItemQty(product?._id));
 
   const handleClick = (type) => () => {
+    if (!product) return;
     if (type === "add") {
       let isAuthenticated = auth.isAuthenticated();
       if (!isAuthenticated) {
@@ -45,6 +48,7 @@ export default function ProductDescription() {
   };
 
   const handleQty = (type) => () => {
+    if (!product) return;
     if (type === "increase") {
       dispatch(increaseQty(product));
     } else {

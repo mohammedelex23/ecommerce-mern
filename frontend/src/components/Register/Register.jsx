@@ -38,14 +38,19 @@ export default function Register() {
     name = name.trim();
 
     try {
-      let user = await authApi.callAuth("signup", "post", {
-        email,
-        password,
-        name,
+      let user = await authApi.callAuth({
+        endpoint: "signup",
+        method: "post",
+        body: {
+          email,
+          password,
+          name,
+        },
       });
 
       setAuthError("");
       // redirect to registeration_success route
+      localStorage.setItem("registeration_success", "registeration_success");
       navigate("/registeration_success", { state: "Registeration Success" });
     } catch (error) {
       if (error?.type) {

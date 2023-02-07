@@ -1,5 +1,5 @@
 const bcrypt = require("bcrypt");
-const saltRounds = 10;
+const saltRounds = 15;
 
 function generateHash(data) {
   return new Promise(function (resolve, reject) {

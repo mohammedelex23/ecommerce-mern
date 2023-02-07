@@ -63,7 +63,7 @@ export default function AddProductForm({ AddProducts }) {
   return (
     <div id="add-product-wrapper" className="product-form-wrapper">
       <div className="product-form">
-        <form enctype="multipart/form-data" onSubmit={handleSubmit}>
+        <form encType="multipart/form-data" onSubmit={handleSubmit}>
           <div className="form-title">
             <h4>New Product</h4>
 

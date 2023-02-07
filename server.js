@@ -20,8 +20,12 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, "./upload")));
 app.use(
   cors({
-    origin: ["http://localhost:3000", "https://checkout.stripe.com","https://ecommerce-mern-production-73b6.up.railway.app/"],
-    methods: ["GET", "POST"],
+    origin: [
+      "http://localhost:3000",
+      "https://checkout.stripe.com",
+      "https://ecommerce-mern-production-73b6.up.railway.app/",
+    ],
+    methods: ["GET", "POST", "PUT"],
   })
 );
 

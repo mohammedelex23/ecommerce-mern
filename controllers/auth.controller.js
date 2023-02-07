@@ -8,6 +8,7 @@ const {
 const generateHash = require("../utils/generateHash");
 const compareWithHash = require("../utils/compareWithHash");
 const sendEmail = require("../utils/sendEmail");
+const crypto = require("../utils/crypto");
 
 const signup = async function (req, res, next) {
   try {
@@ -18,7 +19,7 @@ const signup = async function (req, res, next) {
     if (foundUser) {
       return next(new BadRequest("you can not use this email"));
     }
-    const hash = await generateHash(password);
+    let hash = await generateHash(password);
 
     let user = new User({
       name,
@@ -28,10 +29,23 @@ const signup = async function (req, res, next) {
     user = await user.save();
 
     // send verification email to the user
-    const token = await generateToken({ id: user.id }, "2h");
-    sendEmail(email, token, user.name, function (err, info) {
-      if (err) console.log(err);
-      else console.log(info);
+    hash = crypto.encrypt(`${Date.now()}_${process.env.SALT}_${user._id}`);
+    let token = generateToken(
+      {
+        hash,
+        id: user._id,
+      },
+      "3000s"
+    );
+    sendEmail({
+      email,
+      token,
+      name: user.name,
+      userId: user._id,
+      cb: function (err, info) {
+        if (err) console.log(err);
+        else console.log(info);
+      },
     });
 
     user.password = undefined;
@@ -72,14 +86,44 @@ const login = async function (req, res, next) {
 
 const verifyAccount = async function (req, res, next) {
   try {
-    let user = await User.findByIdAndUpdate(
-      req.userId,
+    let user = req.user;
+    user.isVerified = true;
+    await user.save();
+    res.status(200).send("account is verified");
+  } catch (error) {
+    next(error);
+  }
+};
+
+const resendEmail = async function (req, res, next) {
+  try {
+    let user = await User.findById(req.params.userId);
+    if (!user) {
+      return res.status(401).json({
+        name: "TokenError",
+        message: "invalid token",
+      });
+    }
+    // send verification email to the user
+    hash = crypto.encrypt(
+      `${Date.now()}_${process.env.SALT}_${req.params.userId}`
+    );
+    let token = generateToken(
       {
-        $set: { isVerified: true },
+        hash,
       },
-      { new: true }
-    ).select("-password");
-    res.status(200).json(user);
+      "3000s"
+    );
+    sendEmail({
+      email,
+      token,
+      name: user.name,
+      userId: user._id,
+      cb: function (err, info) {
+        if (err) console.log(err);
+        else console.log(info);
+      },
+    });
   } catch (error) {
     next(error);
   }
@@ -89,4 +133,5 @@ module.exports = {
   signup,
   login,
   verifyAccount,
+  resendEmail,
 };

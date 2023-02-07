@@ -8,6 +8,12 @@ const authMiddlewares = require("../middlewares/authMiddlewares");
 
 router.post("/signup", validateSignup, authCtrl.signup);
 router.post("/login", validateLogin, authCtrl.login);
-router.put("/verify", authMiddlewares.verifyToken, authCtrl.verifyAccount);
+router.post("/resend_email/:userId", authCtrl.resendEmail);
+router.put(
+  "/verify",
+  authMiddlewares.userIsVerified,
+  authMiddlewares.verifyToken,
+  authCtrl.verifyAccount
+);
 
 module.exports = router;

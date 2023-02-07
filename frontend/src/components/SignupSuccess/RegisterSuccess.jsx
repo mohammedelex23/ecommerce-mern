@@ -2,10 +2,17 @@ import "./RegisterSuccess.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { Link, useLocation, Navigate } from "react-router-dom";
+import { useEffect } from "react";
 export default function RegisterSuccess() {
   const { state } = useLocation();
 
-  if (!state) {
+  let registeration_success = localStorage.getItem("registeration_success");
+
+  useEffect(() => {
+    localStorage.removeItem("registeration_success");
+  });
+
+  if (!state || !registeration_success) {
     return <Navigate to="/" />;
   }
 

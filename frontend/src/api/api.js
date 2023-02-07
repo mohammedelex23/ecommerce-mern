@@ -1,14 +1,11 @@
 import axios from "axios";
 import configs from "../configs";
-const callAuth = async function ({ endpoint, method, body, token, userId }) {
+const callApi = async function (endpoint, method, body) {
   try {
     let res = await axios({
       method,
-      url: `${configs.BASE_URL}/auth/${endpoint}?userId=${userId}`,
+      url: `${configs.BASE_URL}/api/${endpoint}`,
       data: body,
-      headers: {
-        authorization: "Bearer " + token,
-      },
     });
     return res.data;
   } catch (error) {
@@ -17,4 +14,4 @@ const callAuth = async function ({ endpoint, method, body, token, userId }) {
   }
 };
 
-export default { callAuth };
+export default { callApi };

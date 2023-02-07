@@ -29,7 +29,11 @@ export default function Login() {
     email = email.trim();
     password = password.trim();
     try {
-      let user = await authApi.callAuth("login", "post", { email, password });
+      let user = await authApi.callAuth({
+        endpoint: "login",
+        method: "post",
+        body: { email, password },
+      });
       setAuthError("");
       auth.authenticateUser(user);
       navigate(state || state?.pathname || "/", { state: state?.state });

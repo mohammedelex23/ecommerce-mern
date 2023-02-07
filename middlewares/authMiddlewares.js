@@ -14,9 +14,33 @@ const verifyToken = async function (req, res, next) {
     );
   }
   const token = bearerHeader.split(" ")[1];
+
   try {
     let { id } = await verifyJWTtoken(token);
     req.userId = id;
+    next();
+  } catch (error) {
+    next(error);
+  }
+};
+
+const userIsVerified = async function (req, res, next) {
+  try {
+    let user = await User.findById(req.query.userId).select("-password");
+    console.log(user);
+
+    if (!user) {
+      return res.status(401).json({
+        name: "TokenError",
+        message: "invalid token",
+      });
+    }
+    if (user.isVerified) {
+      return res.status(400).json({
+        name: "AccountVerifiedError",
+        message: "user account is already verified",
+      });
+    }
     next();
   } catch (error) {
     next(error);
@@ -39,4 +63,4 @@ const authenticateUser = async function (req, res, next) {
   }
 };
 
-module.exports = { verifyToken, authenticateUser };
+module.exports = { verifyToken, authenticateUser, userIsVerified };

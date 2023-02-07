@@ -1,13 +1,11 @@
 const stripe = require("stripe")(
   "sk_test_51MOh6VJkUoTpRNdsMaJWxhSZ389yh8uaBoAe1iT0tFM9nJ4DtzfJBYQ9C7VICX52cLfZlCRlhDPZuAv55UkWZ0lf00O9iDTYO3"
 );
-const YOUR_DOMAIN = "http://localhost:3000";
 
-async function createCheckoutSession(req, res) {
+async function createCheckoutSession(req, res, next) {
   let line_items = req.cart.map((item) => {
     let imageUrl = `${process.env.BASE_URL}/api/products/${item._id}/image`;
-    console.log("asdasd", imageUrl);
-
+    console.log(req.cart, "\n", imageUrl);
     return {
       quantity: item.qty,
       price_data: {
@@ -21,14 +19,19 @@ async function createCheckoutSession(req, res) {
       },
     };
   });
-  const session = await stripe.checkout.sessions.create({
-    line_items,
-    mode: "payment",
-    success_url: `${process.env.BASE_URL}/success`,
-    cancel_url: `${process.env.BASE_URL}/`, //redirect user to main page
-  });
 
-  res.status(200).json(session.url);
+  try {
+    const session = await stripe.checkout.sessions.create({
+      line_items,
+      mode: "payment",
+      success_url: `${process.env.BASE_URL}/success`,
+      cancel_url: `${process.env.BASE_URL}/`, //redirect user to main page
+    });
+
+    res.status(200).json(session.url);
+  } catch (error) {
+    next(error);
+  }
 }
 const webhook = async function (request, response) {
   const event = request.body;

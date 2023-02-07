@@ -6,7 +6,7 @@ export default function useApi(url) {
     isLoading: false,
     isError: false,
     error: null,
-    data: [],
+    data: null,
   });
 
   const AddProducts = function (product) {

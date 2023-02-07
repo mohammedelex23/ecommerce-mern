@@ -1,6 +1,6 @@
 const nodemailer = require("nodemailer");
 
-module.exports = function sendEmail(email, token, name, cb) {
+module.exports = function sendEmail({ email, token, name, userId, cb }) {
   const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
@@ -17,7 +17,7 @@ module.exports = function sendEmail(email, token, name, cb) {
         <p>Hello ${name},</p>
         <h1>Signup Seccessfull</h1>
         <p>Before you can begin using your account, you need to activate it using the below link:</p>
-        <a style="color:blue;font-size:18px;font-weight:bold" href="http://localhost:3000/verify?token=${token}">Verify account</a>
+        <a style="color:blue;font-size:18px;font-weight:bold" href="${process.env.BASE_URL}/verify_account?token=${token}&id=${userId}">Verify account</a>
         </html>`,
   };
   transporter.sendMail(mailOptions, cb);

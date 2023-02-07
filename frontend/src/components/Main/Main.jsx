@@ -11,6 +11,7 @@ import Login from "../Login/Login";
 import Register from "../Register/Register";
 import RegisterSuccess from "../SignupSuccess/RegisterSuccess";
 import Dashboard from "../Dashboard/Dashboard";
+import VerifyAccount from "../VerifyAccount/VerifyAccount";
 
 const router = createBrowserRouter([
   {
@@ -60,6 +61,15 @@ const router = createBrowserRouter([
       <>
         {/* <Header /> */}
         <RegisterSuccess />
+      </>
+    ),
+  },
+  {
+    path: "/verify_account",
+    element: (
+      <>
+        {/* <Header /> */}
+        <VerifyAccount />
       </>
     ),
   },
