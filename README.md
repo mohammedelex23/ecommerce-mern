@@ -4,10 +4,14 @@ a home page that lists products, a product description page and signup/signin pa
 thier email and verifies his email and then start login and add items to the cart and perform checkouts via the payment gateway.
 
 ## Technologies used
-### Reactjs:### a very popular frontend library that is used to build the ui of the application.
-### Expressjs:### a backend framework which is used along with nodejs to build the api for the application.
-### MongoDB:### a popular non-relational database I used to store the application dynamic data.
-### Stripe:### a popular payment gateway that makes dealing with cards, banking and other related things easy for developers and accelerate
+### Reactjs:
+a very popular frontend library that is used to build the ui of the application.
+### Expressjs:
+a backend framework which is used along with nodejs to build the api for the application.
+### MongoDB:
+a popular non-relational database I used to store the application dynamic data.
+### Stripe:
+a popular payment gateway that makes dealing with cards, banking and other related things easy for developers and accelerate
 the development process.
 
 ## How to install
