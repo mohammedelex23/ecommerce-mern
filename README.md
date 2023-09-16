@@ -12,8 +12,8 @@ the development process.
 
 ## How to install
 Either by downloading the zip file by clicking the green button and then chosing the download as zip option or by cloneing the reop
-by executing the following on the cmd/terminal:
-git clone https://github.com/mohammedelex23/ecommerce-mern.git
+by executing the following on the cmd/terminal:<br />
+git clone https://github.com/mohammedelex23/ecommerce-mern.git<br />
 but make sure that you have git installed on your machine (search on google "how to install git on windows/linux/mac").
 
 ## How to run the application
