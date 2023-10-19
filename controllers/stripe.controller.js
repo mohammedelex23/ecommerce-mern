@@ -5,7 +5,6 @@ const stripe = require("stripe")(
 async function createCheckoutSession(req, res, next) {
   let line_items = req.cart.map((item) => {
     let imageUrl = `${process.env.BASE_URL}/api/products/${item._id}/image`;
-    console.log(req.cart, "\n", imageUrl);
     return {
       quantity: item.qty,
       price_data: {
@@ -26,6 +25,9 @@ async function createCheckoutSession(req, res, next) {
       mode: "payment",
       success_url: `${process.env.BASE_URL}/success`,
       cancel_url: `${process.env.BASE_URL}/`, //redirect user to main page
+      metadata: {
+        userId: req.user._id,
+      },
     });
 
     res.status(200).json(session.url);
@@ -68,7 +70,9 @@ const webhook = async function (request, response) {
           expand: ["line_items"],
         }
       );
+
       const lineItems = sessionWithLineItems.line_items;
+      const userId = paymentIntent.metadata.userId; // store order in the db
       // console.log("payment_success", lineItems, session.id);
 
       break;

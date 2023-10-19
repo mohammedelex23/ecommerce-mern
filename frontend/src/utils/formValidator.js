@@ -1,5 +1,5 @@
-function isEmpty(field) {
-  return !field || !field.trim();
+function isEmpty(value) {
+  return !value || !value.trim();
 }
 
 const validateEmail = function (email) {
@@ -17,6 +17,24 @@ const validateName = function (name) {
   }
   return { error: false };
 };
+const validateState = function (state) {
+  if (isEmpty(state)) {
+    return { error: true, message: "state is empty" };
+  }
+  return { error: false };
+};
+const validateCity = function (city) {
+  if (isEmpty(city)) {
+    return { error: true, message: "city is empty" };
+  }
+  return { error: false };
+};
+const validatePhone = function (phone) {
+  if (isEmpty(phone)) {
+    return { error: true, message: "phone is empty" };
+  }
+  return { error: false };
+};
 const validatePrice = function (price) {
   if (isEmpty(price)) {
     return { error: true, message: "price is not selected" };
@@ -26,9 +44,13 @@ const validatePrice = function (price) {
   }
   return { error: false };
 };
-const validateDescription = function (description) {
-  if (isEmpty(description)) {
-    return { error: true, message: "description is empty" };
+const validateFormField = function (field, value) {
+  if (isEmpty(value)) {
+    return { error: true, message: field + " is empty" };
+  } else if (["password", "newPassword"].includes(field)) {
+    if (!isEmpty(value) && value.trim().length < 8) {
+      return { error: true, message: "password less than 8 characters" };
+    }
   }
   return { error: false };
 };
@@ -54,16 +76,21 @@ const validatePassword = function (password) {
 const validateConfirmPassword = function (password, confirmPassword) {
   let { error } = validatePassword(password);
 
-  if (!error && password !== confirmPassword)
+  if (!error && password !== confirmPassword) {
     return { error: true, message: "passwords don't match" };
-  return { error: false };
+  } else {
+    return { error: false };
+  }
 };
 export default {
   validateEmail,
   validatePassword,
   validateConfirmPassword,
   validateName,
-  validateDescription,
+  validateFormField,
   validatePrice,
   validateImage,
+  validateCity,
+  validateState,
+  validatePhone,
 };

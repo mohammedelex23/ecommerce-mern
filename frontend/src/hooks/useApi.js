@@ -45,11 +45,10 @@ export default function useApi(url) {
       ...values,
       isLoading: true,
       isError: false,
-      data: [],
+      data: null,
     });
     try {
       let res = await axios.get(url);
-
       setValues({
         ...values,
         isLoading: false,
@@ -57,14 +56,14 @@ export default function useApi(url) {
         data: res.data,
       });
     } catch (error) {
-      console.log(url, error);
+      // console.log(url, error);
 
       setValues({
         ...values,
         isLoading: false,
         isError: true,
         error: error?.response?.data || error.message,
-        data: [],
+        data: null,
       });
     }
   };

@@ -20,6 +20,7 @@ const productSchema = new mongoose.Schema(
       contentType: String,
       data: Buffer,
     },
+    featured: false,
   },
   {
     timestamps: true,

@@ -1,0 +1,17 @@
+.nav a {
+  display: inline-block;
+  text-transform: capitalize;
+  text-decoration: none;
+  color: #000000;
+  padding: 5px;
+  background-color: #fafafa;
+  margin-bottom: 20px;
+}
+.nav a:first-child {
+  color: #575757;
+  border-right: 1px solid gray;
+  padding-right: 10px;
+}
+.nav a:last-child {
+  margin-left: 10px;
+}

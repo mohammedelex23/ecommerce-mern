@@ -1,12 +1,9 @@
 import "./VerifyAccount.css";
-import { useSearchParams, Navigate, useNavigate, Link } from "react-router-dom";
-import jwt_decode from "jwt-decode";
+import { useSearchParams, useNavigate, Link } from "react-router-dom";
 import { useState } from "react";
-import ErrorComp from "../ErrorComp/ErrorComp";
 import auth from "../../auth/auth";
 import authApi from "../../api/authApi";
 import { useEffect } from "react";
-import api from "../../api/api";
 
 export default function VerifyAccount() {
   const [searchParams] = useSearchParams();

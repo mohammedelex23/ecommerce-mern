@@ -1,0 +1,60 @@
+.myaccount {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+.myaccount .myaccount-btn {
+  background-color: #000000;
+  color: #ffffff;
+  border: none;
+  width: 100%;
+  padding: 7px;
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+.myaccount .myaccount-btn.reset {
+  background-color: #ffffff;
+  color: #000000;
+  border: 1px solid #000000;
+}
+.myaccount .myaccount-btn span {
+  margin-left: 10px;
+}
+
+.myaccount .container {
+  padding: 15px;
+}
+.myaccount .container .child {
+  margin-bottom: 20px;
+}
+.myaccount .container .child .title {
+  font-size: 14px;
+}
+.myaccount form input {
+  display: block;
+  width: 100%;
+  padding: 7px;
+  border: 1px solid gray;
+  margin-bottom: 10px;
+}
+.myaccount form .input-error {
+  margin-top: -7px;
+}
+.myaccount .login-link {
+  margin-top: -20px;
+  text-align: center;
+}
+
+/************** media queries ***********/
+/* md */
+@media only screen and (min-width: 992px) {
+  .for-media-query {
+    display: flex;
+    /* justify-content: space-between; */
+    column-gap: 100px;
+    justify-content: center;
+    /* padding: 40px !important; */
+  }
+  .for-media-query .child {
+    flex: 0 0 43%;
+  }
+}

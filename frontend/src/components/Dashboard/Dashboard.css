@@ -2,8 +2,12 @@
   margin-top: 10px;
 }
 .dashboard-products-warapper {
-  box-shadow: 1px 0px 5px -1px rgb(0 0 0 / 30%);
-  padding: 20px 10px;
+  padding: 20px;
+}
+.dashboard-title {
+  text-transform: uppercase;
+  margin-top: -15px;
+  margin-bottom: 20px;
 }
 .dashboard-products-warapper .add-product:hover {
   background-color: rgb(39, 153, 39);

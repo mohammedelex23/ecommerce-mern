@@ -1,8 +1,10 @@
 import "./Login.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEnvelope } from "@fortawesome/free-regular-svg-icons";
-import { faUnlockKeyhole } from "@fortawesome/free-solid-svg-icons";
-import { Link, useLocation, useNavigate, Navigate } from "react-router-dom";
+import {
+  faRightToBracket,
+  faRotateRight,
+} from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from "react-router-dom";
 import ErrorComp from "../ErrorComp/ErrorComp";
 import useLoginForm from "../../hooks/useLoginForm";
 import authApi from "../../api/authApi";
@@ -10,6 +12,9 @@ import { useState } from "react";
 import auth from "../../auth/auth";
 
 export default function Login() {
+  const [authError, setAuthError] = useState("");
+  const navigate = useNavigate();
+
   const {
     values,
     emailError,
@@ -18,13 +23,14 @@ export default function Login() {
     handleChange,
     isFormValid,
   } = useLoginForm();
-  const [authError, setAuthError] = useState("");
-  const { state } = useLocation();
-  const navigate = useNavigate();
+  const [disableSubmitBtn, setDisableSubmitBtn] = useState(false);
 
-  const handleClick = async function () {
+  const handleSubmit = async function (e) {
+    e.preventDefault();
     let isValid = isFormValid();
     if (!isValid || emailError || passwordError) return;
+    setDisableSubmitBtn(true);
+
     let { email, password } = values;
     email = email.trim();
     password = password.trim();
@@ -34,10 +40,15 @@ export default function Login() {
         method: "post",
         body: { email, password },
       });
+      console.log(user);
       setAuthError("");
+      setDisableSubmitBtn(false);
+
       auth.authenticateUser(user);
-      navigate(state || state?.pathname || "/", { state: state?.state });
+      window.location.reload("/myaccount");
     } catch (error) {
+      setDisableSubmitBtn(false);
+
       if (error?.type === "AccountVerification") {
         // redirect to account verify route
         navigate("/registeration_success", { state: "Account Verification" });
@@ -46,61 +57,59 @@ export default function Login() {
       }
     }
   };
-
-  if (auth.isLoggedIn()) {
-    return <Navigate to="/" />;
-  }
-
   return (
-    <div className="login-wrapper">
-      <div className="login-content">
-        {/* title */}
-        <div className="title-container">
-          <div className="title">
-            <p>LOG IN</p>
-          </div>
+    <div className="child login">
+      <h4 className="myaccount-title">RETURNING CUSTOMERS</h4>
+      <p>Please log in to your account.</p>
+      {authError && (
+        <div style={{ marginBottom: "10px", textAlign: "center" }}>
+          <ErrorComp error={authError} />
         </div>
-        {authError && (
-          <div style={{ marginBottom: "10px", textAlign: "center" }}>
-            <ErrorComp error={authError} />
+      )}
+      <form onSubmit={handleSubmit}>
+        <input
+          onChange={handleChange("email")}
+          onBlur={handleBlur("email")}
+          name="email"
+          placeholder="Email"
+          type="text"
+          autoFocus
+        />
+        {emailError && (
+          <div className="input-error">
+            <ErrorComp error={emailError} />
           </div>
         )}
-        <div className="input-wrapper">
-          <div className="input-group">
-            <span>
-              <FontAwesomeIcon color="gray" icon={faEnvelope} />
-            </span>
-            <input
-              onChange={handleChange("email")}
-              onBlur={handleBlur("email")}
-              type="text"
-              placeholder="Enter your email"
-            />
+        <input
+          onChange={handleChange("password")}
+          onBlur={handleBlur("password")}
+          name="password"
+          placeholder="Password"
+          type="password"
+        />
+        {passwordError && (
+          <div className="input-error">
+            <ErrorComp error={passwordError} />
           </div>
-          {emailError && <ErrorComp error={emailError} />}
-        </div>
-        <div className="input-wrapper">
-          <div className="input-group">
-            <span>
-              <FontAwesomeIcon color="gray" icon={faUnlockKeyhole} />
-            </span>
-            <input
-              onChange={handleChange("password")}
-              onBlur={handleBlur("password")}
-              type="password"
-              placeholder="Enter your password"
-            />
-          </div>
-          {passwordError && <ErrorComp error={passwordError} />}
-        </div>
-        <div className="login-btn">
-          <button onClick={handleClick}>Log in</button>
-        </div>
-        <div className="links">
-          <a href="">Forget Password?</a>
-          <Link to="/register">Register</Link>
-        </div>
-      </div>
+        )}
+        {/* button */}
+        <button
+          style={{
+            backgroundColor: disableSubmitBtn ? "gray" : "#000000",
+            cursor: disableSubmitBtn ? "not-allowed" : "pointer",
+          }}
+          disabled={disableSubmitBtn}
+          className="myaccount-btn"
+        >
+          <FontAwesomeIcon icon={faRightToBracket} />
+          <span>LOG IN TO MY ACCOUNT</span>
+        </button>
+      </form>
+      {/* button */}
+      <button className="myaccount-btn reset">
+        <FontAwesomeIcon icon={faRotateRight} />
+        <span>RESET MY PASSWORD</span>
+      </button>
     </div>
   );
 }

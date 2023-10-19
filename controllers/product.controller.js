@@ -56,7 +56,15 @@ async function createProduct(req, res, next) {
 
 async function updateProduct(req, res, next) {
   try {
-    const { name, description, price, image } = req.body;
+    const { name, description, price, image: file } = req.body;
+    let image = {};
+    console.log(file);
+    if (file) {
+      image.data = fs.readFileSync(file.filepath);
+      image.contentType = file.mimetype;
+    } else {
+      image = null;
+    }
     let oldProduct = await Product.findById(req.params.id);
     if (!oldProduct) {
       return next(

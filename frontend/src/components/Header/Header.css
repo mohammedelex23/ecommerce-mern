@@ -7,39 +7,40 @@
   align-items: center;
   margin-left: auto;
   margin-right: auto;
+  color: var(--black-primary);
+  padding-left: 15px;
+  padding-right: 15px;
+}
+.header a {
+  text-decoration: none;
+  color: #000000;
 }
 .header .logo {
   font-size: 1.2rem;
   user-select: none;
   cursor: pointer;
 }
-.header .logo a {
-  text-decoration: none;
-  color: #000000;
+.header .logo img {
+  width: 140px;
 }
 .header div .icon {
-  color: #646060;
   font-size: 1.2rem;
   cursor: pointer;
 }
-.header div > span {
-  margin-right: 15px;
+.header .cart-icon {
+  margin-left: 10px;
 }
 .header .cart-counter {
   position: relative;
   top: -12px;
   right: 7px;
-  background-color: rgb(10, 128, 39);
+  background-color: var(--green);
   color: #fff;
   width: 20px;
   height: 20px;
   padding: 3px;
   border-radius: 50%;
-
   font-size: 12px;
-  /* vertical-align: middle; */
-  /* line-height: 16px; */
-  /* text-align: center; */
 }
 .header .login-link:hover {
   background-color: rgb(39, 153, 39);
@@ -52,7 +53,9 @@
   border-radius: 3px;
 }
 .header .wrapper {
-  position: relative;
+  display: flex;
+  align-items: center;
+  column-gap: 12px;
 }
 .header .wrapper .logout {
   position: absolute;
@@ -69,4 +72,61 @@
   text-decoration: underline;
   user-select: none;
   cursor: pointer;
+}
+.header .logout-btn {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  display: none;
+  align-items: center;
+  column-gap: 10px;
+  cursor: pointer;
+}
+.header .side-box {
+  position: fixed;
+  width: 0;
+  height: 100vh;
+  z-index: 999;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  overflow-x: hidden;
+  transition: all 0.5s ease-in-out;
+}
+.header .side-box .side-slider {
+  position: relative;
+  overflow-y: auto;
+  background-color: #ffffff;
+  width: 70%;
+  height: 100%;
+  padding: 20px;
+}
+.header .side-box .side-exit-icon {
+  position: absolute;
+  right: 20px;
+  z-index: 999;
+  color: var(--black-primary);
+  font-size: larger;
+  cursor: pointer;
+}
+.header .side-slider .title {
+  margin-bottom: 10px;
+  border-bottom: 1px solid #ececec;
+  padding-bottom: 10px;
+}
+.header .side-slider ul {
+  margin-bottom: 30px;
+}
+.header .side-slider ul li {
+  margin-bottom: 15px;
+}
+.header .side-slider .social ul {
+  display: flex;
+  column-gap: 20px;
+}
+.header .dashboard-link {
+  background-color: green;
+  color: #ffffff;
+  padding: 5px;
+  border-radius: 3px;
 }

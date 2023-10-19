@@ -23,32 +23,31 @@ export default function DeleteProduct({
   };
 
   return (
-    <div
-      style={{ display: "block" }}
-      className="product-form-wrapper delete-product"
-    >
-      <div className="product-form">
-        <p>
-          Are you sure you want to delete <strong>({productName})</strong>
-        </p>
-        <div>
-          <button onClick={hideDeleteProduct}>Cancel</button>
-          {!deleteSuccess ? (
-            <button onClick={handleDelete}>Confirm</button>
-          ) : (
-            <button
-              disabled
-              style={{
-                backgroundColor: "green",
-                display: "flex",
-                alignItems: "center",
-                gap: "3px",
-              }}
-            >
-              Done
-              <FontAwesomeIcon icon={faCheck} />
-            </button>
-          )}
+    <div style={{ display: "block" }} className="product-modal-wrapper ">
+      <div className="product-modal delete-product">
+        <div className="product-form">
+          <p>
+            Are you sure you want to delete <strong>({productName})</strong>
+          </p>
+          <div>
+            <button onClick={hideDeleteProduct}>Cancel</button>
+            {!deleteSuccess ? (
+              <button onClick={handleDelete}>Confirm</button>
+            ) : (
+              <button
+                disabled
+                style={{
+                  backgroundColor: "green",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "3px",
+                }}
+              >
+                Done
+                <FontAwesomeIcon icon={faCheck} />
+              </button>
+            )}
+          </div>
         </div>
       </div>
     </div>

@@ -1,4 +1,3 @@
-import "./EditProductForm.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRemove } from "@fortawesome/free-solid-svg-icons";
 import useEditProductForm from "../../hooks/useEditProductForm";
@@ -10,6 +9,7 @@ export default function EditProductForm({
   product,
   hideEditProduct,
   editProduct,
+  updateImageDate,
 }) {
   const [showSuccess, setShowSuccess] = useState(false);
   const [error, setError] = useState("");
@@ -18,6 +18,7 @@ export default function EditProductForm({
   const {
     values,
     nameError,
+    setNameError,
     imageError,
     setImageError,
     priceError,
@@ -84,9 +85,9 @@ export default function EditProductForm({
 
     try {
       let res = await productApi.updateProduct(form, product._id);
-      console.log(res.image);
 
       editProduct(res);
+      updateImageDate();
       setShowSuccess(true);
 
       // update dashboard products list by pushing the response
@@ -97,7 +98,11 @@ export default function EditProductForm({
       // clearFormState(["name", "description", "price", "image"]);
       // document.getElementsByTagName("form")[0].reset();
     } catch (error) {
-      setError(error?.message || "something went wrong");
+      if (error.type === "nameError") {
+        setNameError(error.message);
+      } else {
+        setError(error?.message || "something went wrong");
+      }
     }
   };
 
@@ -110,78 +115,80 @@ export default function EditProductForm({
     <div
       style={{ display: "block" }}
       id="edit-product-wrapper"
-      className="product-form-wrapper"
+      className="product-modal-wrapper"
     >
-      <div className="product-form">
-        <form onSubmit={handleSubmit}>
-          <div className="form-title">
-            <h4>Edit Product</h4>
+      <div className="product-modal">
+        <div className="product-form">
+          <form onSubmit={handleSubmit}>
+            <div className="form-title">
+              <h4>Edit Product</h4>
 
-            <FontAwesomeIcon
-              onClick={hideEditProductModal}
-              className="exit-icon"
-              icon={faRemove}
-            />
-          </div>
-          {error && <ErrorComp error={error} />}
-          {showSuccess && (
-            <div className="success-message">Successfully updated</div>
-          )}
-          <div className="form-group">
-            <label htmlFor="name">Name</label>
-            <input
-              value={values.name}
-              onChange={handleChange("name")}
-              onBlur={handleBlur("name")}
-              type="text"
-              placeholder="Unique name"
-            />
-            {nameError && <ErrorComp error={nameError} />}
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="desc">Description</label>
-            <textarea
-              value={values.description}
-              onChange={handleChange("description")}
-              onBlur={handleBlur("description")}
-              rows={4}
-              placeholder="Product description"
-            />
-            {descriptioncError && <ErrorComp error={descriptioncError} />}
-          </div>
-          <div>
-            <label className="price" htmlFor="price">
-              Price
-            </label>
-            <input
-              value={values.price}
-              onChange={handleChange("price")}
-              onBlur={handleBlur("price")}
-              className="input-price"
-              type="number"
-              min={1}
-            />
-            {priceError && <ErrorComp error={priceError} />}
-          </div>
-          <div className="form-group">
-            {changeProductImage ? (
-              <>
-                <label htmlFor="image">Image</label>
-                <input onChange={handleChange("image")} type="file" />
-                <span onClick={hideInputFile} className="input-file">
-                  Hide input file
-                </span>
-                {imageError && <ErrorComp error={imageError} />}
-              </>
-            ) : (
-              <span className="input-file" onClick={showInputFile}>
-                Change product image
-              </span>
+              <FontAwesomeIcon
+                onClick={hideEditProductModal}
+                className="exit-icon"
+                icon={faRemove}
+              />
+            </div>
+            {error && <ErrorComp error={error} />}
+            {showSuccess && (
+              <div className="success-message">Successfully updated</div>
             )}
-          </div>
-          <button type="submit">Submit</button>
-        </form>
+            <div className="form-group">
+              <label htmlFor="name">Name</label>
+              <input
+                value={values.name}
+                onChange={handleChange("name")}
+                onBlur={handleBlur("name")}
+                type="text"
+                placeholder="Unique name"
+              />
+              {nameError && <ErrorComp error={nameError} />}
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="desc">Description</label>
+              <textarea
+                value={values.description}
+                onChange={handleChange("description")}
+                onBlur={handleBlur("description")}
+                rows={4}
+                placeholder="Product description"
+              />
+              {descriptioncError && <ErrorComp error={descriptioncError} />}
+            </div>
+            <div>
+              <label className="price" htmlFor="price">
+                Price
+              </label>
+              <input
+                value={values.price}
+                onChange={handleChange("price")}
+                onBlur={handleBlur("price")}
+                className="input-price"
+                type="number"
+                min={1}
+              />
+              {priceError && <ErrorComp error={priceError} />}
+            </div>
+            <div className="form-group">
+              {changeProductImage ? (
+                <>
+                  <label htmlFor="image">Image</label>
+                  <input onChange={handleChange("image")} type="file" />
+                  <span onClick={hideInputFile} className="input-file">
+                    Hide input file
+                  </span>
+                  {imageError && <ErrorComp error={imageError} />}
+                </>
+              ) : (
+                <span className="input-file" onClick={showInputFile}>
+                  Change product image
+                </span>
+              )}
+            </div>
+            <button type="submit">Submit</button>
+          </form>
+        </div>
       </div>
     </div>
   );

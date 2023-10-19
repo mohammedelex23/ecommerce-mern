@@ -6,9 +6,12 @@ import useApi from "../../hooks/useApi";
 import configs from "../../configs";
 import ErrorComp from "../ErrorComp/ErrorComp";
 export default function Products() {
-  const { data: products, isError, isLoading, error } = useApi(
-    `${configs.BASE_URL}/api/products`
-  );
+  const {
+    data: products,
+    isError,
+    isLoading,
+    error,
+  } = useApi(`${configs.BASE_URL}/products`);
 
   return (
     <>

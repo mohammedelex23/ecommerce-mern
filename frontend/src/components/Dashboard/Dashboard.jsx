@@ -13,16 +13,18 @@ export default function Dashboard() {
     AddProducts,
     deleteProduct,
     editProduct,
-  } = useApi(`${configs.BASE_URL}/api/products`);
+  } = useApi(`${configs.BASE_URL}/products`);
 
   const handleClick = function () {
     let addProductWrapper = document.getElementById("add-product-wrapper");
     addProductWrapper.style.display = "block";
+    document.body.style.overflow = "hidden";
   };
 
   return (
     <div className="dashboard">
       <div className="dashboard-products-warapper">
+        <h2 className="dashboard-title">Dashboard</h2>
         <button onClick={handleClick} className="add-product-btn">
           Add Product +
         </button>

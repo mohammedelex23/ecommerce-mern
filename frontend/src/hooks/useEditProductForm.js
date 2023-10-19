@@ -44,7 +44,8 @@ export default function useEditProductForm() {
     let { error: nameError } = formValidator.validateName(values.name);
     let { error: priceError } = formValidator.validatePrice(values.price);
     let { error: imageError } = formValidator.validateImage(values.image);
-    let { error: descriptioncError } = formValidator.validateDescription(
+    let { error: descriptioncError } = formValidator.validateFormField(
+      "description",
       values.description
     );
 
@@ -70,7 +71,10 @@ export default function useEditProductForm() {
     }
   }
   function validateDescription(desc) {
-    let { error, message } = formValidator.validateDescription(desc);
+    let { error, message } = formValidator.validateFormField(
+      "description",
+      desc
+    );
     if (error) {
       setDescriptioncError(message);
     } else {
@@ -112,6 +116,7 @@ export default function useEditProductForm() {
   return {
     values,
     nameError,
+    setNameError,
     imageError,
     setImageError,
     priceError,

@@ -13,15 +13,9 @@ const localUserSlice = createSlice({
         state.name = action.payload.name;
         state.email = action.payload.email;
         state.token = action.payload.token;
-        state.gender = action.payload.gender;
         state.isAdmin = action.payload.isAdmin;
-        state.dateOfBirth = action.payload.dateOfBirth;
         state.createdAt = action.payload.createdAt;
         state.updatedAt = action.payload.updatedAt;
-        state.isVerified = action.payload.isVerified;
-        state.friends = action.payload.friends;
-        state.incommingRequests = action.payload.incommingRequests;
-        state.outgoingRequests = action.payload.outgoingRequests;
       }
     },
     updateLocalUser: (state, action) => {

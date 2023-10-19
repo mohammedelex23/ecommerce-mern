@@ -28,6 +28,11 @@ class UnAuthorized extends GeneralError {
     super(message, 403);
   }
 }
+class Conflict extends GeneralError {
+  constructor(message) {
+    super(message, 409);
+  }
+}
 
 module.exports = {
   GeneralError,
@@ -35,4 +40,5 @@ module.exports = {
   UnAuthenticated,
   BadRequest,
   UnAuthorized,
+  Conflict,
 };

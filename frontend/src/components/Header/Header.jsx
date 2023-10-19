@@ -1,34 +1,51 @@
 import "./Header.css";
 import { faUser } from "@fortawesome/free-regular-svg-icons";
-import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
+import {
+  faArrowRightFromBracket,
+  faBars,
+  faShoppingCart,
+  faX,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useSelector } from "react-redux";
 import { selectCart } from "../../redux/slices/cartSlice";
 import { Link, useLocation } from "react-router-dom";
 import auth from "../../auth/auth";
+import { faFacebook, faLinkedin } from "@fortawesome/free-brands-svg-icons";
+import Cart from "../Cart/Cart";
 export default function Header() {
   const { pathname } = useLocation();
 
   const { itemsCount } = useSelector(selectCart);
-  const logout = function () {
-    auth.logout();
-    window.location.href = "/";
-  };
+  const user = auth.getLocalUser();
+
   return (
     <div className="header">
-      {pathname === "/dashboard" ? (
-        <h1 className="logo">
-          <Link to="/">Dashboard</Link>
-        </h1>
-      ) : (
-        <h1 className="logo">
-          <Link to="/">Ecommerce</Link>
-        </h1>
-      )}
+      <Cart />
+
+      <SideSlider />
+
+      <h1 className="logo">
+        <Link to="/">
+          <img src="/images/herba_logo.png" alt="logo" />
+        </Link>
+      </h1>
 
       <div className="wrapper">
-        {pathname !== "/dashboard" && (
+        {user && user.isAdmin && pathname !== "/dashboard" && (
+          <Link className="dashboard-link" to="/dashboard">
+            Dashboard
+          </Link>
+        )}
+
+        <Link to="/myaccount">
+          <FontAwesomeIcon className="icon" icon={faUser} />
+        </Link>
+
+        {/* cart icon */}
+        {pathname !== "/shippingAddress" && !user?.isAdmin && (
           <span
+            className="cart-icon"
             onClick={openCart}
             style={{ position: "relative", cursor: "pointer" }}
           >
@@ -36,28 +53,71 @@ export default function Header() {
             <span className="cart-counter">{itemsCount}</span>
           </span>
         )}
+        <FontAwesomeIcon
+          onClick={openSidenav}
+          style={{ cursor: "pointer" }}
+          size="lg"
+          icon={faBars}
+        />
+      </div>
+    </div>
+  );
+}
 
-        {auth.isAuthenticated() ? (
-          <>
-            {pathname === "/dashboard" && (
-              <span style={{ marginRight: "7px", userSelect: "none" }}>
-                Admin
-              </span>
-            )}
-            <FontAwesomeIcon
-              onClick={toggleLogout}
-              className="icon"
-              icon={faUser}
-            />
-          </>
-        ) : (
-          <Link className="login-link" to="/login">
-            Login
-          </Link>
-        )}
-        <div id="logout" className="logout">
-          <span onClick={logout}>Logout</span>
+function SideSlider() {
+  return (
+    <div id="sidenav" className="side-box">
+      <div className="side-slider">
+        <FontAwesomeIcon
+          onClick={closeSidenav}
+          className="side-exit-icon"
+          icon={faX}
+        />
+        <div className="menu-links">
+          <h3 className="title">Herba care</h3>
+          <ul className="links">
+            <li>
+              <Link>Home</Link>
+            </li>
+            <li>
+              <Link>Orders</Link>
+            </li>
+            <li>
+              <Link>favorites</Link>
+            </li>
+          </ul>
         </div>
+        {/* categories */}
+        {/* <div className="cats">
+          <h3 className="title">CATEGORIES</h3>
+          <ul className="links">
+            <li>
+              <Link>supplements</Link>
+            </li>
+            <li>
+              <Link>men</Link>
+            </li>
+            <li>
+              <Link>top sellers</Link>
+            </li>
+          </ul>
+        </div> */}
+        {/* social */}
+        {/* <div className="social">
+          <h3 className="title">SOCIAL</h3>
+          <ul>
+            <li>
+              <a href="">
+                <FontAwesomeIcon icon={faFacebook} />
+              </a>
+            </li>
+            <li>
+              <a href="">
+                <FontAwesomeIcon icon={faLinkedin} />
+              </a>
+            </li>
+          </ul>
+        </div> */}
       </div>
     </div>
   );
@@ -68,9 +128,9 @@ function openCart() {
   document.body.style.overflow = "hidden";
 }
 
-function toggleLogout() {
-  let logout = document.getElementById("logout");
-  logout.style.display === "block"
-    ? (logout.style.display = "none")
-    : (logout.style.display = "block");
+function openSidenav() {
+  document.getElementById("sidenav").style.width = "100vw";
+}
+function closeSidenav() {
+  document.getElementById("sidenav").style.width = "0";
 }

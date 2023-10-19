@@ -1,5 +1,18 @@
+#veiw-product .product-contents {
+  position: relative;
+  max-width: 500px;
+  margin-left: 15px;
+  margin-right: 15px;
+  padding: 30px;
+  background-color: #ffffff;
+  border-radius: 3px;
+  margin-top: 10%;
+}
+.product-contents .product-desc {
+  margin-top: 15px;
+}
 #veiw-product .product-img {
-  width: 60%;
+  width: 100%;
   display: block;
   margin: auto;
   margin-bottom: 10px;
@@ -11,12 +24,8 @@
   font-weight: bold;
   margin-right: 5px;
 }
-.exit-icon-container .exit-icon {
-  padding-top: 10px;
-  padding-right: 15px;
-}
-.exit-icon-container {
-  /* background-color: tomato; */
-  margin: -20px;
-  text-align: end;
+#veiw-product .exit-icon {
+  position: absolute;
+  right: 15px;
+  top: 15px;
 }

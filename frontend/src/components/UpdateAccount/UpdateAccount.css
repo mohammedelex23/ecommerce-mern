@@ -1,0 +1,49 @@
+.form-title {
+  text-transform: capitalize;
+  margin-bottom: 10px;
+}
+.update-shipping-info {
+  border: 1px solid gray;
+  margin-top: 15px;
+  margin-bottom: 10px;
+}
+.shipping-info-box {
+  padding-left: 15px;
+  padding-right: 15px;
+  overflow: hidden;
+  height: 0px;
+  transition: all 0.5s ease-in;
+}
+.sigup-btn {
+  margin-top: 15px;
+}
+.update-shipping-info-btn {
+  width: 100%;
+  padding: 10px;
+  text-transform: uppercase;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  border: none;
+  border-bottom: 1px solid gray;
+  cursor: pointer;
+  background-color: #f0f0f0;
+}
+.update-shipping-info-btn span {
+  margin-right: 10px;
+}
+.shipping-info-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.updated-success {
+  border: 2px solid green;
+  padding: 5px;
+  border-radius: 3px;
+  background-color: rgba(0, 255, 0, 0.2);
+  margin-bottom: 10px;
+}
+.updated-success p {
+  margin: 10px;
+}

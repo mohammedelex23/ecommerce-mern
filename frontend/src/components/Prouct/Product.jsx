@@ -19,7 +19,7 @@ export default function Product({ product }) {
     if (type === "add") {
       let isAuthenticated = auth.isAuthenticated();
       if (!isAuthenticated) {
-        return navigate("/login", { state: pathname });
+        return navigate("/myaccount", { state: pathname });
       }
       dispatch(addToCart(product));
     } else {
@@ -28,11 +28,11 @@ export default function Product({ product }) {
   };
 
   return (
-    <li className="product">
-      <Link state={{ productId: product._id }} to="/product">
+    <div className="product">
+      <Link state={{ productId: product._id }} to={`/products/${product._id}`}>
         <img
           className="product-img"
-          src={`${configs.BASE_URL}/api/products/${product._id}/image`}
+          src={`${configs.BASE_URL}/products/${product._id}/image`}
           alt="product"
         />
       </Link>
@@ -43,15 +43,15 @@ export default function Product({ product }) {
         </div>
         <span className="desc">{product.description}</span>
         {!inCart ? (
-          <button onClick={handleClick("add")} className="btn add">
+          <button onClick={handleClick("add")} className=" add">
             Add to Cart
           </button>
         ) : (
-          <button onClick={handleClick("remove")} className="btn remove">
+          <button onClick={handleClick("remove")} className=" remove">
             remove
           </button>
         )}
       </div>
-    </li>
+    </div>
   );
 }

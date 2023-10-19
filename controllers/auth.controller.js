@@ -4,21 +4,16 @@ const {
   UnAuthenticated,
   UnAuthorized,
   BadRequest,
+  Conflict,
 } = require("../error/errorClass");
-const generateHash = require("../utils/generateHash");
 const compareWithHash = require("../utils/compareWithHash");
 const sendEmail = require("../utils/sendEmail");
-const crypto = require("../utils/crypto");
+const verifyJWTtoken = require("../utils/verifyJWTtoken");
+const generateHash = require("../utils/generateHash");
 
 const signup = async function (req, res, next) {
   try {
     const { name, email, password } = req.body;
-
-    // check for user duplication
-    let foundUser = await User.findOne({ email });
-    if (foundUser) {
-      return next(new BadRequest("you can not use this email"));
-    }
     let hash = await generateHash(password);
 
     let user = new User({
@@ -29,10 +24,8 @@ const signup = async function (req, res, next) {
     user = await user.save();
 
     // send verification email to the user
-    hash = crypto.encrypt(`${Date.now()}_${process.env.SALT}_${user._id}`);
     let token = generateToken(
       {
-        hash,
         id: user._id,
       },
       "3000s"
@@ -64,14 +57,12 @@ const login = async function (req, res, next) {
     }
 
     let isValid = await compareWithHash(password, user.password);
+    console.log(isValid);
     if (!isValid) {
       return next(new UnAuthenticated("invalid email or password"));
     }
     if (!user.isVerified) {
-      return res.status(403).json({
-        type: "AccountVerification",
-        message: "your account is not verified yet",
-      });
+      return next(new UnAuthenticated("your account is not verified yet"));
     }
     const token = generateToken({ id: user._id, isAdmin: user.isAdmin });
     user.password = undefined;
@@ -86,7 +77,13 @@ const login = async function (req, res, next) {
 
 const verifyAccount = async function (req, res, next) {
   try {
-    let user = req.user;
+    let user = await User.findeById(req.userId);
+    if (!user) {
+      return next(new BadRequest("user is not found"));
+    }
+    if (user.isVerified) {
+      return next(new Conflict("user is already verified"));
+    }
     user.isVerified = true;
     await user.save();
     res.status(200).send("account is verified");
@@ -99,18 +96,12 @@ const resendEmail = async function (req, res, next) {
   try {
     let user = await User.findById(req.params.userId);
     if (!user) {
-      return res.status(401).json({
-        name: "TokenError",
-        message: "invalid token",
-      });
+      return next(new UnAuthorized("invalid token"));
     }
     // send verification email to the user
-    hash = crypto.encrypt(
-      `${Date.now()}_${process.env.SALT}_${req.params.userId}`
-    );
     let token = generateToken(
       {
-        hash,
+        id: user._id,
       },
       "3000s"
     );
@@ -129,9 +120,57 @@ const resendEmail = async function (req, res, next) {
   }
 };
 
+const forgotPassword = async function (req, res, next) {
+  try {
+    const email = req.body.email;
+    let user = await User.findOne({ email });
+    if (!user) {
+      return next(new UnAuthorized("you can't use this email"));
+    }
+    let token = generateToken(
+      {
+        id: user._id,
+      },
+      "1800s" // 30 minutes
+    );
+    sendEmail({
+      email,
+      token,
+      name: user.name,
+      userId: user._id,
+      cb: function (err, info) {
+        if (err) console.log(err);
+        else console.log(info);
+      },
+    });
+    res.status(200).json("check your  email and follow the reset link");
+  } catch (error) {
+    next(error);
+  }
+};
+const resetPassword = async function (req, res, next) {
+  try {
+    const { email, password, token } = req.body;
+    let { id } = await verifyJWTtoken(token);
+
+    let user = await User.findById(id);
+
+    if (user.email !== email) {
+      return next(new UnAuthorized("you can't use this email"));
+    }
+
+    user.password = password;
+    await user.save();
+    res.status(200).json("password reset successfully");
+  } catch (error) {
+    next(error);
+  }
+};
 module.exports = {
   signup,
   login,
   verifyAccount,
   resendEmail,
+  forgotPassword,
+  resetPassword,
 };

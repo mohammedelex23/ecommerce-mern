@@ -25,6 +25,11 @@ const userSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    shippingAddress: {
+      state: String,
+      city: String,
+      phone: String,
+    },
   },
   {
     timestamps: true,

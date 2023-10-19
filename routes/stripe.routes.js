@@ -23,6 +23,4 @@ const app = express();
 // If you are using Express v4 - v4.16 you need to use body-parser, not express, to retrieve the request body
 router.post("/webhook", stripeCtrl.webhook);
 
-app.listen(8000, () => console.log("Running on port 8000"));
-
 module.exports = router;

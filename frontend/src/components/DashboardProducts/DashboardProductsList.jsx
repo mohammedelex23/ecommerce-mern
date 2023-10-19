@@ -19,7 +19,7 @@ export default function DashboardProductsList({
           <thead>
             <tr>
               <th>ID</th>
-              <th>Product</th>
+              <th className="product-width">Product</th>
               <th>Action</th>
             </tr>
           </thead>

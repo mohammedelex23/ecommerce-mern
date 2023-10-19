@@ -1,0 +1,16 @@
+.title-box {
+  padding-bottom: 5px;
+  border-bottom: 1px solid #ececec;
+  margin-bottom: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.title-box .back {
+  display: flex;
+  align-items: center;
+  column-gap: 5px;
+}
+.title {
+  text-transform: uppercase;
+}

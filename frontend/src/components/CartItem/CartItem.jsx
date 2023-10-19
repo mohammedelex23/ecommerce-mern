@@ -14,7 +14,7 @@ export default function CartItem({ item }) {
   return (
     <li className="cart-item-wrapper">
       <div>
-        <img src={`${configs.BASE_URL}/api/products/${item._id}/image`} />
+        <img src={`${configs.BASE_URL}/products/${item._id}/image`} />
         <div>
           <span style={{ display: "block" }}>{item.name}</span>
           <span className="price">${item.price}</span>

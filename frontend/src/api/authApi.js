@@ -4,7 +4,7 @@ const callAuth = async function ({ endpoint, method, body, token, userId }) {
   try {
     let res = await axios({
       method,
-      url: `${configs.BASE_URL}/auth/${endpoint}?userId=${userId}`,
+      url: `${configs.AUTH_URL}/${endpoint}?userId=${userId}`,
       data: body,
       headers: {
         authorization: "Bearer " + token,

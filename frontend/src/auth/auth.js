@@ -16,6 +16,12 @@ const isUserVerified = function () {
 const authenticateUser = function (user) {
   localStorage.setItem("user", JSON.stringify(user));
 };
+const updateLocalUser = function (newUser) {
+  let oldUser = getLocalUser();
+  newUser["token"] = oldUser.token;
+  localStorage.setItem("user", JSON.stringify(newUser));
+};
+
 const getToken = function () {
   let user = getLocalUser();
   if (!user) return null;
@@ -34,7 +40,8 @@ const isLoggedIn = function () {
     }
     let decoded = jwt_decode(token);
     let token_exp = decoded.exp * 1000;
-    if (token_exp - 1000 * 60 * 60 >= Date.now()) {
+    if (token_exp - 1000 * 60 * 2 >= Date.now()) {
+      //token has 2 minutes left to expire: it is still valid
       return true;
     }
     logout();
@@ -53,4 +60,5 @@ export default {
   logout,
   isUserVerified,
   isLoggedIn,
+  updateLocalUser,
 };

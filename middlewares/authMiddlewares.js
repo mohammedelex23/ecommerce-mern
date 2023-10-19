@@ -3,6 +3,7 @@ const {
   BadRequest,
   UnAuthenticated,
   UnAuthorized,
+  Conflict,
 } = require("../error/errorClass");
 const User = require("../models/user.model");
 
@@ -27,19 +28,12 @@ const verifyToken = async function (req, res, next) {
 const userIsVerified = async function (req, res, next) {
   try {
     let user = await User.findById(req.query.userId).select("-password");
-    console.log(user);
 
     if (!user) {
-      return res.status(401).json({
-        name: "TokenError",
-        message: "invalid token",
-      });
+      return next(new UnAuthorized("invalid token"));
     }
     if (user.isVerified) {
-      return res.status(400).json({
-        name: "AccountVerifiedError",
-        message: "user account is already verified",
-      });
+      return next(new Conflict("user account is already verified"));
     }
     next();
   } catch (error) {

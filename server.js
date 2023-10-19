@@ -22,6 +22,7 @@ app.use(
   cors({
     origin: [
       "http://localhost:3000",
+      "http://127.0.0.1:3000",
       "https://checkout.stripe.com",
       "https://ecommerce-mern-production-73b6.up.railway.app/",
     ],
@@ -34,12 +35,14 @@ const productRouter = require("./routes/product.routes");
 const stripeRouter = require("./routes/stripe.routes");
 const userRouter = require("./routes/user.routes");
 const authRouter = require("./routes/auth.routes");
+const orderRouter = require("./routes/order.routes");
 
 // use require custom routes
-app.use("/api/products", productRouter);
-app.use("/api/stripe", stripeRouter);
-app.use("/api/users", userRouter);
-app.use("/auth", authRouter);
+app.use("/api/v1/products", productRouter);
+app.use("/api/v1/stripe", stripeRouter);
+app.use("/api/v1/users", userRouter);
+app.use("/auth/v1", authRouter);
+app.use("/orders/v1", orderRouter);
 
 // not found middleware
 const indexRouter = express.Router().get("/", function (req, res) {
@@ -50,10 +53,10 @@ if (process.env.NODE_ENV === "development") {
 } else {
   console.log("exec");
 
-  app.use(express.static(path.join(__dirname, "./frontend/build")));
+  app.use(express.static(path.join(__dirname, "./frontend/dist")));
   app.get("*", function (req, res) {
     console.log("exec passed");
-    res.sendFile(path.resolve(__dirname, "./frontend/build/index.html"));
+    res.sendFile(path.resolve(__dirname, "./frontend/dist/index.html"));
   });
 }
 app.use(notFoundMiddleware);

@@ -5,7 +5,6 @@ import useAddProductForm from "../../hooks/useAddProductForm";
 import ErrorComp from "../ErrorComp/ErrorComp";
 import productApi from "../../api/productApi";
 import { useState } from "react";
-import { useEffect } from "react";
 export default function AddProductForm({ AddProducts }) {
   const [showSuccess, setShowSuccess] = useState(false);
   const [error, setError] = useState("");
@@ -40,7 +39,6 @@ export default function AddProductForm({ AddProducts }) {
     form.append("description", description);
     form.append("price", price);
     form.append("image", image);
-
     try {
       let product = await productApi.createProduct(form);
       AddProducts(product);
@@ -58,66 +56,69 @@ export default function AddProductForm({ AddProducts }) {
   const toggleAddProductModal = function () {
     setShowSuccess(false);
     document.getElementById("add-product-wrapper").style.display = "none";
+    document.body.style.overflow = "auto";
     setError("");
   };
   return (
-    <div id="add-product-wrapper" className="product-form-wrapper">
-      <div className="product-form">
-        <form encType="multipart/form-data" onSubmit={handleSubmit}>
-          <div className="form-title">
-            <h4>New Product</h4>
+    <div id="add-product-wrapper" className="product-modal-wrapper">
+      <div className="product-modal">
+        <div className="product-form">
+          <form encType="multipart/form-data" onSubmit={handleSubmit}>
+            <div className="form-title">
+              <h4>New Product</h4>
 
-            <FontAwesomeIcon
-              onClick={toggleAddProductModal}
-              className="exit-icon"
-              icon={faRemove}
-            />
-          </div>
-          {error && <ErrorComp error={error} />}
-          {showSuccess && (
-            <div className="success-message">Successfully created</div>
-          )}
-          <div className="form-group">
-            <label htmlFor="name">Name</label>
-            <input
-              onChange={handleChange("name")}
-              onBlur={handleBlur("name")}
-              type="text"
-              placeholder="Unique name"
-            />
-            {nameError && <ErrorComp error={nameError} />}
-          </div>
+              <FontAwesomeIcon
+                onClick={toggleAddProductModal}
+                className="exit-icon"
+                icon={faRemove}
+              />
+            </div>
+            {error && <ErrorComp error={error} />}
+            {showSuccess && (
+              <div className="success-message">Successfully created</div>
+            )}
+            <div className="form-group">
+              <label htmlFor="name">Name</label>
+              <input
+                onChange={handleChange("name")}
+                onBlur={handleBlur("name")}
+                type="text"
+                placeholder="Unique name"
+              />
+              {nameError && <ErrorComp error={nameError} />}
+            </div>
 
-          <div className="form-group">
-            <label htmlFor="desc">Description</label>
-            <textarea
-              onChange={handleChange("description")}
-              onBlur={handleBlur("description")}
-              rows={4}
-              placeholder="Product description"
-            />
-            {descriptioncError && <ErrorComp error={descriptioncError} />}
-          </div>
-          <div>
-            <label className="price" htmlFor="price">
-              Price
-            </label>
-            <input
-              onChange={handleChange("price")}
-              onBlur={handleBlur("price")}
-              className="input-price"
-              type="number"
-              min={1}
-            />
-            {priceError && <ErrorComp error={priceError} />}
-          </div>
-          <div className="form-group">
-            <label htmlFor="image">Image</label>
-            <input onChange={handleChange("image")} type="file" />
-            {imageError && <ErrorComp error={imageError} />}
-          </div>
-          <button type="submit">Submit</button>
-        </form>
+            <div className="form-group">
+              <label htmlFor="desc">Description</label>
+              <textarea
+                onChange={handleChange("description")}
+                onBlur={handleBlur("description")}
+                rows={4}
+                placeholder="Product description"
+              />
+              {descriptioncError && <ErrorComp error={descriptioncError} />}
+            </div>
+            <div>
+              <label className="price" htmlFor="price">
+                Price
+              </label>
+              <input
+                onChange={handleChange("price")}
+                onBlur={handleBlur("price")}
+                className="input-price"
+                type="number"
+                min={1}
+              />
+              {priceError && <ErrorComp error={priceError} />}
+            </div>
+            <div className="form-group">
+              <label htmlFor="image">Image</label>
+              <input onChange={handleChange("image")} type="file" />
+              {imageError && <ErrorComp error={imageError} />}
+            </div>
+            <button type="submit">Submit</button>
+          </form>
+        </div>
       </div>
     </div>
   );
