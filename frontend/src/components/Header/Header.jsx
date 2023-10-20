@@ -1,5 +1,5 @@
 import "./Header.css";
-import { faUser } from "@fontawesome/free-regular-svg-icons";
+import { faUser } from "@fortawesome/free-regular-svg-icons";
 import {
   faArrowRightFromBracket,
   faBars,
