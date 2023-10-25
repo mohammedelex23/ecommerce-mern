@@ -11,6 +11,6 @@ jobs:
       - name: Install dependencies
         run: npm install
       - name: list files
-        run: ls node_modules
+        run: ls node_modules/@fortawesome
       - name: build
         run: npm run build
