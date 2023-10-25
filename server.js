@@ -54,10 +54,10 @@ if (process.env.NODE_ENV === "development") {
   console.log("exec");
 
   app.use(express.static(path.join(__dirname, "./frontend/dist")));
-  //app.get("*", function (req, res) {
-    //console.log("exec passed");
-   // res.sendFile(path.resolve(__dirname, "./frontend/dist/index.html"));
- // });
+  app.get("*", function (req, res) {
+    console.log("exec passed");
+    res.sendFile(path.resolve(__dirname, "./frontend/dist/index.html"));
+ });
 }
 app.use(notFoundMiddleware);
 // error middlware
