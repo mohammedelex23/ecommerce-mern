@@ -14,3 +14,5 @@ jobs:
         run: ls node_modules/@fortawesome
       - name: build
         run: npm run build
+      - name: list files
+        run: ls frontend
