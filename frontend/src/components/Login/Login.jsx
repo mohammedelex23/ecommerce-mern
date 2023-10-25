@@ -66,7 +66,7 @@ export default function Login() {
           <ErrorComp error={authError} />
         </div>
       )}
-      <form onSubmit={handleSubmit}>
+      <form method="POST" onSubmit={handleSubmit}>
         <input
           onChange={handleChange("email")}
           onBlur={handleBlur("email")}
