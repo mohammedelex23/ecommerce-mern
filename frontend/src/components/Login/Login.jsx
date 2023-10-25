@@ -37,7 +37,7 @@ export default function Login() {
     try {
       let user = await authApi.callAuth({
         endpoint: "login",
-        method: "post",
+        method: "POST",
         body: { email, password },
       });
       console.log(user);
