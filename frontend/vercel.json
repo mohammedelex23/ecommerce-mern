@@ -3,6 +3,6 @@
     {"source": "/(.*)", "destination": "/"}
   ],
   "redirects": [
-    {"source": "/api/*", "destination": "/https://ecommerce-3ir8.onrender.com/api/*"}
+    {"source": "/(api.*)", "destination": "/https://ecommerce-3ir8.onrender.com/api/*"}
   ]
 }
