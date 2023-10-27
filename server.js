@@ -24,7 +24,7 @@ app.use(
       "http://localhost:3000",
       "http://127.0.0.1:3000",
       "https://checkout.stripe.com",
-      "https://ecommerce-mern-avpx.onrender.com",
+      "https://ecommerce-mern-khfhryear-mohammedelex23.vercel.app",
     ],
     methods: ["GET", "POST", "PUT"],
   })
