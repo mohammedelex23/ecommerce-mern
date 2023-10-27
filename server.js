@@ -48,17 +48,17 @@ app.use("/orders/v1", orderRouter);
 const indexRouter = express.Router().get("/", function (req, res) {
   res.send("api is running");
 });
-if (process.env.NODE_ENV === "development") {
+//if (process.env.NODE_ENV === "development") {
   app.use("/", indexRouter);
-} else {
-  console.log("exec");
+// } else {
+//   console.log("exec");
 
-  app.use(express.static(path.join(__dirname, "./frontend/dist")));
-  app.get("*", function (req, res) {
-    console.log("exec passed");
-    res.sendFile(path.resolve(__dirname, "./frontend/dist/index.html"));
- });
-}
+//   app.use(express.static(path.join(__dirname, "./frontend/dist")));
+//   app.get("*", function (req, res) {
+//     console.log("exec passed");
+//     res.sendFile(path.resolve(__dirname, "./frontend/dist/index.html"));
+//  });
+// }
 app.use(notFoundMiddleware);
 // error middlware
 app.use(errorMiddleware);
