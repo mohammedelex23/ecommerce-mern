@@ -1,9 +1,5 @@
 {
-  "rewrites":  [
-    {"source": "/(.*)", "destination": "/"}
-  ],
   "redirects": [
-    {"source": "/api/v1/products", "destination": "https://your-render-server.com/api/v1/products"},
     {"source": "/api/:path*", "destination": "/https://ecommerce-3ir8.onrender.com/api/:path*"}
   ]
 }
