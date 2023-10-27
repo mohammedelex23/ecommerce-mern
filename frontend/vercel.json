@@ -2,7 +2,7 @@
   "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }],
   "redirects": [
     {
-      "source": "https://ecommerce-mern-navy.vercel.app/api/:path*",
+      "source": "/api/:path*",
       "destination": "https://ecommerce-3ir8.onrender.com/api/:path*"
     }
   ]
