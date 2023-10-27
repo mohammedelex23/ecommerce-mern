@@ -4,6 +4,10 @@
     {
       "source": "/api/:path*",
       "destination": "https://ecommerce-3ir8.onrender.com/api/:path*"
+    },
+    {
+      "source": "/auth/:path*",
+      "destination": "https://ecommerce-3ir8.onrender.com/auth/:path*"
     }
   ]
 }
