@@ -11,7 +11,6 @@ import { useSelector } from "react-redux";
 import { selectCart } from "../../redux/slices/cartSlice";
 import { Link, useLocation } from "react-router-dom";
 import auth from "../../auth/auth";
-import { faFacebook, faLinkedin } from "@fortawesome/free-brands-svg-icons";
 import Cart from "../Cart/Cart";
 export default function Header() {
   const { pathname } = useLocation();
