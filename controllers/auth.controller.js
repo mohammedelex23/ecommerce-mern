@@ -57,7 +57,7 @@ const login = async function (req, res, next) {
     }
 
     let isValid = await compareWithHash(password, user.password);
-    console.log(isValid);
+
     if (!isValid) {
       return next(new UnAuthenticated("invalid email or password"));
     }
