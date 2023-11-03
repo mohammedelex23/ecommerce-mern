@@ -1,0 +1,24 @@
+.orders-history-table {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  text-align: start;
+  user-select: none;
+}
+.orders-history-table th {
+  text-align: start;
+  padding: 15px;
+}
+.orders-history-table tr {
+  box-shadow: 0px 0px 1px 0px grey;
+}
+.orders-history-table .table-row {
+  cursor: pointer;
+}
+
+.orders-history-table .table-row:hover {
+  background-color: #f1f1f1;
+}
+.orders-history-table .table-row td {
+  padding: 10px;
+}

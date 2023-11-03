@@ -37,7 +37,7 @@
 .profile .edit span {
   margin-left: 5px;
 }
-.profile .orders {
+.profile .orders-history-link {
   margin-bottom: 10px;
   box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
     rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
@@ -47,10 +47,10 @@
   font-weight: bold;
   cursor: pointer;
 }
-.profile .orders a {
+.profile .orders-history-link a {
   color: green;
   text-decoration: none;
 }
-.profile .orders span {
+.profile .orders-history-link span {
   margin-left: 10px;
 }

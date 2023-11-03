@@ -16,6 +16,8 @@ import SignupSuccess from "../SignupSuccess/SignupSuccess";
 import ShippingAddress from "../ShippingAddress/ShippingAddress";
 import UpdateAccount from "../UpdateAccount/UpdateAccount";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
+import OrdersHistory from "../OrdersHistory/OrdersHistory";
+import Order from "../Order/Order";
 
 const router = createBrowserRouter([
   {
@@ -27,6 +29,14 @@ const router = createBrowserRouter([
         <Home />
       </>
     ),
+  },
+  {
+    path: "orders_history",
+    element: <OrdersHistory />,
+  },
+  {
+    path: "/orders_history/:orderId",
+    element: <Order />,
   },
   {
     path: "/myaccount",

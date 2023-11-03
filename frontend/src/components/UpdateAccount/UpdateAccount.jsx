@@ -167,7 +167,7 @@ const UpdateAccount = () => {
   };
   return (
     <CommonRoute
-      showBackLink={true}
+      prevRoute="myaccount"
       currentRoute="update account"
       title="update account"
     >

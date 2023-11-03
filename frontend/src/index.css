@@ -1,3 +1,25 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+img {
+  width: 100%;
+}
+
+.pending-status {
+  display: inline-block;
+  padding: 1px 10px;
+  border: 1px solid transparent;
+  color: #41464b;
+  background-color: #e2e3e5;
+  border-color: #d3d6d8;
+}
+.completed-status {
+  display: inline-block;
+  padding: 1px 10px;
+  border: 1px solid transparent;
+  display: inline-block;
+  color: #0f5132;
+  background-color: #d1e7dd;
+  border-color: #badbcc;
+}

@@ -1,0 +1,32 @@
+.order {
+  margin-bottom: 20px;
+}
+.order .total-status {
+  display: flex;
+  justify-content: space-between;
+}
+.order-items {
+  margin-top: 20px;
+  padding: 10px;
+  max-height: 50vh;
+  overflow-y: auto;
+  box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
+    rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+}
+.order-items .order-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.order .image-name-price {
+  display: flex;
+  align-items: center;
+}
+
+.order .image-name-price .img-box {
+  width: 60px;
+  margin-right: 10px;
+}
+.order .image-name-price .img-box img {
+  border-radius: 50%;
+}

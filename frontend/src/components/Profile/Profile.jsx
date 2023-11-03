@@ -86,11 +86,11 @@ const Profile = () => {
               Logout
             </span>
           </div>
-          {/* orders */}
-          <div className="orders">
-            <Link to="/orders">
+          {/* orders history */}
+          <div className="orders-history-link">
+            <Link to="/orders_history">
               <FontAwesomeIcon icon={faBasketShopping} />
-              <span>Orders</span>
+              <span>Orders history</span>
             </Link>
           </div>
           {/* user info */}
