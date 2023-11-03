@@ -24,7 +24,7 @@ app.use(
       "http://localhost:3000",
       "http://127.0.0.1:3000",
       "https://checkout.stripe.com",
-      "https://ecommerce-mern-avpx.onrender.com",
+      "https://ecommerce-mern-jet-one.vercel.app",
     ],
     methods: ["GET", "POST", "PUT"],
   })
@@ -48,17 +48,26 @@ app.use("/orders/v1", orderRouter);
 const indexRouter = express.Router().get("/", function (req, res) {
   res.send("api is running");
 });
-if (process.env.NODE_ENV === "development") {
+//if (process.env.NODE_ENV === "development") {
   app.use("/", indexRouter);
-} else {
-  console.log("exec");
+// } else {
+//   console.log("exec");
 
+<<<<<<< HEAD
   app.use(express.static(path.join(__dirname, "./frontend/dist")));
   app.get("*", function (req, res) {
     console.log("exec passed");
     res.sendFile(path.resolve(__dirname, "./frontend/dist/index.html"));
   });
 }
+=======
+//   app.use(express.static(path.join(__dirname, "./frontend/dist")));
+//   app.get("*", function (req, res) {
+//     console.log("exec passed");
+//     res.sendFile(path.resolve(__dirname, "./frontend/dist/index.html"));
+//  });
+// }
+>>>>>>> 49160e31e3685688b0f874ff778da62058779865
 app.use(notFoundMiddleware);
 // error middlware
 app.use(errorMiddleware);
