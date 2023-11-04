@@ -74,7 +74,7 @@ const webhook = async function (request, response) {
       );
 
       const lineItems = sessionWithLineItems.line_items;
-      const userId = paymentIntent.metadata.userId; // store order in the db
+      // const userId = paymentIntent.metadata.userId; // store order in the db
       console.log("payment_success", lineItems, session.id);
 
       break;
