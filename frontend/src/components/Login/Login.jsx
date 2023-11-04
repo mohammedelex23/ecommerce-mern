@@ -40,7 +40,6 @@ export default function Login() {
         method: "POST",
         body: { email, password },
       });
-      console.log(user);
       setAuthError("");
       setDisableSubmitBtn(false);
 
@@ -49,9 +48,11 @@ export default function Login() {
     } catch (error) {
       setDisableSubmitBtn(false);
 
-      if (error?.type === "AccountVerification") {
+      if (error?.name === "AccountVerification") {
         // redirect to account verify route
         navigate("/registeration_success", { state: "Account Verification" });
+      } else if (error?.name === "AccountNotVerified") {
+        navigate("/verifyAccount");
       } else {
         setAuthError(error.message || "something went wrong");
       }

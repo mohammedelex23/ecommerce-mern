@@ -1,7 +1,8 @@
 class GeneralError extends Error {
-  constructor(message, code = 500) {
+  constructor(message, name, code = 500) {
     super(message);
     this.code = code;
+    this.name = name;
   }
 }
 
@@ -12,25 +13,25 @@ class NotFound extends GeneralError {
 }
 
 class BadRequest extends GeneralError {
-  constructor(message) {
-    super(message, 400);
+  constructor(message,name) {
+    super(message,name, 400);
   }
 }
 
 class UnAuthenticated extends GeneralError {
-  constructor(message) {
-    super(message, 401);
+  constructor(message, name) {
+    super(message, name, 401);
   }
 }
 
 class UnAuthorized extends GeneralError {
-  constructor(message) {
-    super(message, 403);
+  constructor(message, name) {
+    super(message, name, 403);
   }
 }
 class Conflict extends GeneralError {
-  constructor(message) {
-    super(message, 409);
+  constructor(message, name) {
+    super(message, name, 409);
   }
 }
 

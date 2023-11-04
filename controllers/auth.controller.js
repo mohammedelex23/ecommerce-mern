@@ -43,6 +43,7 @@ const signup = async function (req, res, next) {
 
     user.password = undefined;
     user.isAdmin = undefined;
+    console.log(token);
     res.status(201).json(user);
   } catch (error) {
     next(error);
@@ -62,7 +63,12 @@ const login = async function (req, res, next) {
       return next(new UnAuthenticated("invalid email or password"));
     }
     if (!user.isVerified) {
-      return next(new UnAuthenticated("your account is not verified yet"));
+      return next(
+        new UnAuthenticated(
+          "your account is not verified yet",
+          "AccountNotVerified"
+        )
+      );
     }
     const token = generateToken({ id: user._id, isAdmin: user.isAdmin });
     user.password = undefined;
@@ -77,12 +83,12 @@ const login = async function (req, res, next) {
 
 const verifyAccount = async function (req, res, next) {
   try {
-    let user = await User.findeById(req.userId);
+    let user = await User.findById(req.userId);
     if (!user) {
       return next(new BadRequest("user is not found"));
     }
     if (user.isVerified) {
-      return next(new Conflict("user is already verified"));
+      return next(new Conflict("user is already verified", "AccountVerified"));
     }
     user.isVerified = true;
     await user.save();
@@ -105,14 +111,20 @@ const resendEmail = async function (req, res, next) {
       },
       "3000s"
     );
+    console.log(token);
+
     sendEmail({
-      email,
+      email: user.email,
       token,
       name: user.name,
       userId: user._id,
       cb: function (err, info) {
-        if (err) console.log(err);
-        else console.log(info);
+        if (err) {
+          console.log(err);
+          res.status(400).json({
+            message: "error sending email",
+          });
+        } else console.log(info);
       },
     });
   } catch (error) {

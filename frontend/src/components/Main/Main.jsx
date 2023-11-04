@@ -107,7 +107,7 @@ const router = createBrowserRouter([
   },
 
   {
-    path: "/verify_account",
+    path: "/verifyAccount",
     element: (
       <>
         {/* <Header /> */}

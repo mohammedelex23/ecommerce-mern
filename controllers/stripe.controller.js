@@ -1,6 +1,8 @@
+// const stripe = require("stripe")(
+//   "sk_test_51MOh6VJkUoTpRNdsMaJWxhSZ389yh8uaBoAe1iT0tFM9nJ4DtzfJBYQ9C7VICX52cLfZlCRlhDPZuAv55UkWZ0lf00O9iDTYO3"
+// );
 const stripe = require("stripe")(
-  "sk_test_51MOh6VJkUoTpRNdsMaJWxhSZ389yh8uaBoAe1iT0tFM9nJ4DtzfJBYQ9C7VICX52cLfZlCRlhDPZuAv55UkWZ0lf00O9iDTYO3"
-);
+  "sk_test_51HWzMUHuAksKvus5CNmr1b9q7zmCV0JGOm3s2BWCs2KDaBEyDKHX4ylQd3U8buj3sq5PeobvhvWxTKvCzfIr9eTe005ZOyocfb");
 
 async function createCheckoutSession(req, res, next) {
   let line_items = req.cart.map((item) => {

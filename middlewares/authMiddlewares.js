@@ -11,7 +11,7 @@ const verifyToken = async function (req, res, next) {
   const bearerHeader = req?.headers["authorization"];
   if (!bearerHeader) {
     return next(
-      new BadRequest("please send the authorization header with bearer token")
+      new BadRequest("please send the authorization header with bearer token","TokenError")
     );
   }
   const token = bearerHeader.split(" ")[1];
