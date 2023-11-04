@@ -6,7 +6,7 @@ const stripe = require("stripe")(
 
 async function createCheckoutSession(req, res, next) {
   let line_items = req.cart.map((item) => {
-    let imageUrl = `${process.env.BASE_URL}/api/products/${item._id}/image`;
+    let imageUrl = `${process.env.BASE_URL}/products/${item._id}/image`;
     return {
       quantity: item.qty,
       price_data: {
@@ -25,8 +25,8 @@ async function createCheckoutSession(req, res, next) {
     const session = await stripe.checkout.sessions.create({
       line_items,
       mode: "payment",
-      success_url: `${process.env.BASE_URL}/success`,
-      cancel_url: `${process.env.BASE_URL}/`, //redirect user to main page
+      success_url: `${process.env.BASE_URL_FRONTEND}/success`,
+      cancel_url: `${process.env.BASE_URL_FRONTEND}/`, //redirect user to main page
       metadata: {
         userId: req.user._id,
       },
